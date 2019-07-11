@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, IItemPickupHandler
 {
     private PlayerController _playerController;
     private PlayerAnimator _playerAnimator;
@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     {
         _playerController = FindObjectOfType<PlayerController>();
         _playerAnimator = FindObjectOfType<PlayerAnimator>();
+
+        _injectInterfaceDependencies();
     }
 
     private void Update()
@@ -16,9 +18,26 @@ public class GameManager : MonoBehaviour
         _setAnimatorParameters();
     }
 
+    private void _injectInterfaceDependencies()
+    {
+        foreach(ItemPickup itemPickup in GameObject.FindObjectsOfType<ItemPickup>())
+        {
+            itemPickup.ItemPickupHandler = this;
+        }
+    }
+
     private void _setAnimatorParameters()
     {
         _playerAnimator.SetAnimatorParameters(_playerController.GetPlayerVelocity());
     }
+
+    public bool IsPlayerWithinInteractibleRange(Vector3 itemPosition, float interactibleDistance)
+    {
+        return Vector3.Distance(itemPosition, _playerController.transform.position) <= interactibleDistance;
+    }
 }
 
+public interface IItemPickupHandler
+{
+    bool IsPlayerWithinInteractibleRange(Vector3 itemPosition, float interactibleDistance);
+}
