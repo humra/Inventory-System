@@ -8,6 +8,14 @@ TagManager:
   - InventoryBtn
   - EquipmentPanel
   - EquipmentBtn
+  - AttributesPanel
+  - AttributesBtn
+  - StrValue
+  - DexValue
+  - ConValue
+  - IntValue
+  - WisValue
+  - ChaValue
   layers:
   - Default
   - TransparentFX
