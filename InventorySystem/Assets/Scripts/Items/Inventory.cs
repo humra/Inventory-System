@@ -47,15 +47,21 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void AddItem(Item newItem)
+    public bool AddItem(Item newItem)
     {
         if(_items.Count < _inventoryCapacity)
         {
             _items.Add(newItem);
+            _updateInventorySlots();
+            _updateInventoryUI();
+
+            Debug.Log(newItem.name + " picked up.");
+
+            return true;
         }
 
-        _updateInventorySlots();
-        _updateInventoryUI();
+        Debug.Log("Can't pick up " + newItem.name + ". No inventory space.");
+        return false;
     }
 
     public void RemoveItem(Item removedItem)
