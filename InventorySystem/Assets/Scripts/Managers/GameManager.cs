@@ -4,11 +4,15 @@ public class GameManager : MonoBehaviour, IItemPickupHandler
 {
     private PlayerController _playerController;
     private PlayerAnimator _playerAnimator;
+    private UIManager _uiManager;
+    private Inventory _inventory;
 
     private void Start()
     {
         _playerController = FindObjectOfType<PlayerController>();
         _playerAnimator = FindObjectOfType<PlayerAnimator>();
+        _uiManager = FindObjectOfType<UIManager>();
+        _inventory = FindObjectOfType<Inventory>();
 
         _injectInterfaceDependencies();
     }
@@ -35,9 +39,15 @@ public class GameManager : MonoBehaviour, IItemPickupHandler
     {
         return Vector3.Distance(itemPosition, _playerController.transform.position) <= interactibleDistance;
     }
+
+    public void UpdateAttributesUI()
+    {
+        _uiManager.UpdateAttributes();
+    }
 }
 
 public interface IItemPickupHandler
 {
     bool IsPlayerWithinInteractibleRange(Vector3 itemPosition, float interactibleDistance);
+    void UpdateAttributesUI();
 }

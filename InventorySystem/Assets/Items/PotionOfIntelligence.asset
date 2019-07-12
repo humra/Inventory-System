@@ -9,18 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1444a6dac59f6fc43b63723231230c61, type: 3}
-  m_Name: Axe
+  m_Script: {fileID: 11500000, guid: f4e5c1df158ec73469e23c4c9f93ea4b, type: 3}
+  m_Name: PotionOfIntelligence
   m_EditorClassIdentifier: 
-  Name: Axe
-  Icon: {fileID: 21300000, guid: 3c6145f9d9d10a24f81ed1bd864bc859, type: 3}
-  PickupEvent: 1
-  Equippable: 0
-  Stackable: 0
-  EquipmentSlot: 3
-  StrModifier: 2
-  DexModifier: 2
+  Name: Potion of Intelligence
+  Icon: {fileID: 21300000, guid: f052d2318db37d740893b51be906be8e, type: 3}
+  PickupEvent: 0
+  StrModifier: 0
+  DexModifier: 0
   ConModifier: 0
-  IntModifier: -1
+  IntModifier: 2
   WisModifier: 0
-  ChaModifier: -1
+  ChaModifier: 0

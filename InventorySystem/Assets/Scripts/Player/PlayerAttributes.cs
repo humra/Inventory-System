@@ -1,10 +1,10 @@
 ﻿
 public static class PlayerAttributes
 {
-    public static int Strength { get; private set; } = 1;
-    public static int Dexterity { get; private set; } = 1;
-    public static int Constitution { get; private set; } = 1;
-    public static int Intelligence { get; private set; } = 1;
-    public static int Wisdom { get; private set; } = 1;
-    public static int Charisma { get; private set; } = 1;
+    public static int Strength = 1;
+    public static int Dexterity = 1;
+    public static int Constitution = 1;
+    public static int Intelligence = 1;
+    public static int Wisdom = 1;
+    public static int Charisma = 1;
 }

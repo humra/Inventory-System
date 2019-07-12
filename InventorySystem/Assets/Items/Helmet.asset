@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1444a6dac59f6fc43b63723231230c61, type: 3}
-  m_Name: Axe
+  m_Name: Helmet
   m_EditorClassIdentifier: 
-  Name: Axe
-  Icon: {fileID: 21300000, guid: 3c6145f9d9d10a24f81ed1bd864bc859, type: 3}
+  Name: Helmet
+  Icon: {fileID: 21300000, guid: c18a701a6d40fca44bcbe27d4bd60ef8, type: 3}
   PickupEvent: 1
+  EquipmentSlot: 0
   Equippable: 0
   Stackable: 0
-  EquipmentSlot: 3
-  StrModifier: 2
-  DexModifier: 2
-  ConModifier: 0
-  IntModifier: -1
+  StrModifier: 1
+  DexModifier: 0
+  ConModifier: 3
+  IntModifier: 0
   WisModifier: 0
-  ChaModifier: -1
+  ChaModifier: 0

@@ -19,19 +19,19 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        _inventoryPanel = GameObject.FindGameObjectWithTag("InventoryPanel");
-        _inventoryButton = GameObject.FindGameObjectWithTag("InventoryBtn");
-        _equipmentPanel = GameObject.FindGameObjectWithTag("EquipmentPanel");
-        _equipmentButton = GameObject.FindGameObjectWithTag("EquipmentBtn");
-        _attributesPanel = GameObject.FindGameObjectWithTag("AttributesPanel");
-        _attributesButton = GameObject.FindGameObjectWithTag("AttributesBtn");
+        _inventoryPanel = GameObject.Find("Inventory");
+        _inventoryButton = GameObject.Find("InventoryBtn");
+        _equipmentPanel = GameObject.Find("Equipment");
+        _equipmentButton = GameObject.Find("EquipmentBtn");
+        _attributesPanel = GameObject.Find("Attributes");
+        _attributesButton = GameObject.Find("AttributesBtn");
 
-        _str = GameObject.FindGameObjectWithTag("StrValue").GetComponent<Text>();
-        _dex = GameObject.FindGameObjectWithTag("DexValue").GetComponent<Text>();
-        _con = GameObject.FindGameObjectWithTag("ConValue").GetComponent<Text>();
-        _int = GameObject.FindGameObjectWithTag("IntValue").GetComponent<Text>();
-        _wis = GameObject.FindGameObjectWithTag("WisValue").GetComponent<Text>();
-        _cha = GameObject.FindGameObjectWithTag("ChaValue").GetComponent<Text>();
+        _str = GameObject.Find("StrValueTxt").GetComponent<Text>();
+        _dex = GameObject.Find("DexValueTxt").GetComponent<Text>();
+        _con = GameObject.Find("ConValueTxt").GetComponent<Text>();
+        _int = GameObject.Find("IntValueTxt").GetComponent<Text>();
+        _wis = GameObject.Find("WisValueTxt").GetComponent<Text>();
+        _cha = GameObject.Find("ChaValueTxt").GetComponent<Text>();
 
         _updateAttributeValues();
 
@@ -82,5 +82,10 @@ public class UIManager : MonoBehaviour
     {
         _attributesPanel.SetActive(!_attributesPanel.activeSelf);
         _attributesButton.SetActive(!_attributesButton.activeSelf);
+    }
+
+    public void UpdateAttributes()
+    {
+        _updateAttributeValues();
     }
 }
