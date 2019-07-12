@@ -25,17 +25,10 @@ public class Inventory : MonoBehaviour
     private InventorySlot[] _inventorySlots;
     private List<Item> _items = new List<Item>();
 
-    public IInventoryHandler InventorySlotHandler;
-
     private void Start()
     {
         _inventorySlots = GameObject.FindObjectsOfType<InventorySlot>();
         _inventoryCapacity = _inventorySlots.Length;
-    }
-
-    private void _updateInventoryUI()
-    {
-        InventorySlotHandler.UpdateInventoryUI();
     }
 
     private void _updateInventorySlots()
@@ -53,7 +46,6 @@ public class Inventory : MonoBehaviour
         {
             _items.Add(newItem);
             _updateInventorySlots();
-            _updateInventoryUI();
 
             Debug.Log(newItem.name + " picked up.");
 
@@ -69,6 +61,5 @@ public class Inventory : MonoBehaviour
         _items.Remove(removedItem);
 
         _updateInventorySlots();
-        _updateInventoryUI();
     }
 }

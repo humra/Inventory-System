@@ -36,6 +36,7 @@ public class ItemPickup : MonoBehaviour
                 PlayerAttributes.Charisma += consumable.ChaModifier;
                 ItemPickupHandler.UpdateAttributesUI();
 
+                Debug.Log(_item.name + " picked up.");
                 Destroy(gameObject);
                 break;
 
@@ -46,7 +47,5 @@ public class ItemPickup : MonoBehaviour
                 }
                 break;
         }
-
-        
     }
 }

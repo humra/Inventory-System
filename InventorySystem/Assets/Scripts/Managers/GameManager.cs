@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryHandler
+public class GameManager : MonoBehaviour, IItemPickupHandler
 {
     private PlayerController _playerController;
     private PlayerAnimator _playerAnimator;
@@ -28,8 +28,6 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryHandler
         {
             itemPickup.ItemPickupHandler = this;
         }
-
-        _inventory.InventorySlotHandler = this;
     }
 
     private void _setAnimatorParameters()
@@ -46,20 +44,10 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryHandler
     {
         _uiManager.UpdateAttributes();
     }
-
-    public void UpdateInventoryUI()
-    {
-        _uiManager.UpdateInventory();
-    }
 }
 
 public interface IItemPickupHandler
 {
     bool IsPlayerWithinInteractibleRange(Vector3 itemPosition, float interactibleDistance);
     void UpdateAttributesUI();
-}
-
-public interface IInventoryHandler
-{
-    void UpdateInventoryUI();
 }
