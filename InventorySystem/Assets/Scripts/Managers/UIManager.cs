@@ -103,6 +103,6 @@ public class UIManager : MonoBehaviour
 
     public void UpdateAttributes()
     {
-        //TO-DO
+        _updateAttributeValues();
     }
 }

@@ -42,6 +42,11 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryHandler
         return Vector3.Distance(itemPosition, _playerController.transform.position) <= interactibleDistance;
     }
 
+    public void UpdateAttributesUI()
+    {
+        _uiManager.UpdateAttributes();
+    }
+
     public void UpdateInventoryUI()
     {
         _uiManager.UpdateInventory();
@@ -51,6 +56,7 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryHandler
 public interface IItemPickupHandler
 {
     bool IsPlayerWithinInteractibleRange(Vector3 itemPosition, float interactibleDistance);
+    void UpdateAttributesUI();
 }
 
 public interface IInventoryHandler

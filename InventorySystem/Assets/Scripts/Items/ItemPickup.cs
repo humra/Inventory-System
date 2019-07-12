@@ -24,9 +24,29 @@ public class ItemPickup : MonoBehaviour
 
     private void _pickUp()
     {
-        if(Inventory.Instance.AddItem(_item))
+        switch(_item.PickupEvent)
         {
-            Destroy(gameObject);
+            case EnumPickupEvent.EnumPermanentUsage:
+                ConsumablePickup consumable = (ConsumablePickup)_item;
+                PlayerAttributes.Strength += consumable.StrModifier;
+                PlayerAttributes.Dexterity += consumable.DexModifier;
+                PlayerAttributes.Constitution += consumable.ConModifier;
+                PlayerAttributes.Intelligence += consumable.IntModifier;
+                PlayerAttributes.Wisdom += consumable.WisModifier;
+                PlayerAttributes.Charisma += consumable.ChaModifier;
+                ItemPickupHandler.UpdateAttributesUI();
+
+                Destroy(gameObject);
+                break;
+
+            case EnumPickupEvent.EnumPickupToInventory:
+                if (Inventory.Instance.AddItem(_item))
+                {
+                    Destroy(gameObject);
+                }
+                break;
         }
+
+        
     }
 }
