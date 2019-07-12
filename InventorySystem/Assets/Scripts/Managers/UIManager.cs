@@ -83,4 +83,26 @@ public class UIManager : MonoBehaviour
         _attributesPanel.SetActive(!_attributesPanel.activeSelf);
         _attributesButton.SetActive(!_attributesButton.activeSelf);
     }
+
+    public void UpdateAllUI()
+    {
+        UpdateInventory();
+        UpdateEquipment();
+        UpdateAttributes();
+    }
+
+    public void UpdateInventory()
+    {
+        //TO-DO
+    }
+
+    public void UpdateEquipment()
+    {
+        //TO-DO
+    }
+
+    public void UpdateAttributes()
+    {
+        //TO-DO
+    }
 }
