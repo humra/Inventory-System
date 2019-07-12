@@ -35,14 +35,32 @@ public class Inventory : MonoBehaviour
     {
         for(int i = 0; i < _items.Count; i++)
         {
-            _inventorySlots[i].ClearSlot();
             _inventorySlots[i].AddItem(_items[i]);
+            _inventorySlots[i].UpdateInventorySlot();
         }
     }
 
     public bool AddItem(Item newItem)
     {
-        if(_items.Count < _inventoryCapacity)
+        foreach(Item existingItem in _items)
+        {
+            if(existingItem == newItem)
+            {
+                if(_inventorySlots[_items.IndexOf(existingItem)].AddOneItem())
+                {
+                    Debug.Log(newItem.name + " added to existing stack.");
+                    _updateInventorySlots();
+                    
+                    return true;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
+
+        if (_items.Count < _inventoryCapacity)
         {
             _items.Add(newItem);
             _updateInventorySlots();
@@ -52,14 +70,13 @@ public class Inventory : MonoBehaviour
             return true;
         }
 
-        Debug.Log("Can't pick up " + newItem.name + ". No inventory space.");
+        Debug.Log("Can't pick up " + newItem.name + ".");
         return false;
     }
 
     public void RemoveItem(Item removedItem)
     {
         _items.Remove(removedItem);
-
         _updateInventorySlots();
     }
 }

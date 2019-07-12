@@ -3,7 +3,7 @@
 public class ItemPickup : MonoBehaviour
 {
     [SerializeField]
-    private float _interactibleDistance = 1f;
+    private float _interactibleDistance = 1.5f;
     [SerializeField]
     private Item _item;
 

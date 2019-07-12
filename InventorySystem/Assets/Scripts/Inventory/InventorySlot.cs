@@ -21,7 +21,15 @@ public class InventorySlot : MonoBehaviour
         _item = newItem;
         _icon.sprite = newItem.Icon;
         _icon.enabled = true;
-        _stackCount++;
+
+        if(_stackCount == 0)
+        {
+            _stackCount++;
+        }
+        else if (_stackCount >= 2)
+        {
+            _stackText.text = _stackCount.ToString();
+        }
     }
 
     public void ClearSlot()
@@ -33,14 +41,27 @@ public class InventorySlot : MonoBehaviour
         _stackText.text = "";
     }
 
-    public void AddOneItem()
+    public bool AddOneItem()
     {
-        _stackCount++;
-
-        if(_stackCount >=2)
+        if(_item.GetType() == typeof(NonEquippableItem))
         {
-            _stackText.text = _stackCount.ToString();
+            NonEquippableItem tempCast = (NonEquippableItem)_item;
+            if(_stackCount + 1 > tempCast.MaximumStack)
+            {
+                return false;
+            }
+
+            _stackCount++;
+
+            if (_stackCount >= 2)
+            {
+                _stackText.text = _stackCount.ToString();
+            }
+
+            return true;
         }
+
+        return false;
     }
 
     public void RemoveOneItem()
@@ -52,6 +73,20 @@ public class InventorySlot : MonoBehaviour
             ClearSlot();
         }
         else if(_stackCount >= 2)
+        {
+            _stackText.text = _stackCount.ToString();
+        }
+    }
+
+    public int GetStackCount()
+    {
+        return _stackCount;
+    }
+
+    public void UpdateInventorySlot()
+    {
+        _icon.sprite = _item.Icon;
+        if (_stackCount >= 2)
         {
             _stackText.text = _stackCount.ToString();
         }
