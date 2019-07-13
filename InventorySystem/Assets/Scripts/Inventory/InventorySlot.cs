@@ -132,12 +132,12 @@ public class InventorySlot : EventTrigger, IPointerEnterHandler, IPointerExitHan
                         Inventory.Instance.DropItem(this);
                         break;
                     }
-                    Debug.Log("Left click");
                     Inventory.Instance.SetTemporaryItemData(this);
                     break;
 
                 case PointerEventData.InputButton.Right:
                     Debug.Log("Right click");
+                    Inventory.Instance.EquipItem(this);
                     break;
 
                 case PointerEventData.InputButton.Middle:

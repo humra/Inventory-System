@@ -29,6 +29,7 @@ public class Inventory : MonoBehaviour
     private int _originIndex;
     private int _destinationIndex;
     private ItemHover _itemHover;
+    private EquipmentSlot[] _equipmentSlots;
 
     public IInventoryInteractionHandler InventoryInteractionHandler;
 
@@ -38,6 +39,7 @@ public class Inventory : MonoBehaviour
         _inventoryCapacity = _inventorySlots.Length;
         _itemHover = GameObject.FindObjectOfType<ItemHover>();
         _itemHover.gameObject.SetActive(false);
+        _equipmentSlots = GameObject.FindObjectsOfType<EquipmentSlot>();
     }
 
     private void Update()
@@ -61,6 +63,8 @@ public class Inventory : MonoBehaviour
     {
         _itemHover.gameObject.SetActive(false);
     }
+
+    #region Inventory
 
     public bool AddItem(Item newItem)
     {
@@ -188,4 +192,33 @@ public class Inventory : MonoBehaviour
 
         return -1;
     }
+
+    #endregion
+
+    #region Equipment
+
+    public void EquipItem(InventorySlot inventorySlot)
+    {
+        if(inventorySlot.GetItem().GetType() != typeof(Equipment))
+        {
+            Debug.Log("Item is not an equipment.");
+            return;
+        }
+
+        Equipment equipmentCast = (Equipment)inventorySlot.GetItem();
+
+        for(int i = 0; i < _equipmentSlots.Length; i++)
+        {
+            if(_equipmentSlots[i].EquipmentType == equipmentCast.EquipmentSlot)
+            {
+                if(_equipmentSlots[i].GetItem() == null)
+                {
+                    _equipmentSlots[i].SetItem(equipmentCast);
+                    inventorySlot.ClearSlot();
+                }
+            }
+        }
+    }
+
+    #endregion
 }
