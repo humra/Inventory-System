@@ -23,7 +23,6 @@ public class Inventory : MonoBehaviour
 
     private int _inventoryCapacity;
     private InventorySlot[] _inventorySlots;
-    private List<Item> _items = new List<Item>();
     private Item _temporaryItem;
     private int _temporaryStackCount;
     private int _originIndex;
@@ -34,26 +33,17 @@ public class Inventory : MonoBehaviour
         _inventoryCapacity = _inventorySlots.Length;
     }
 
-    private void _updateInventorySlots()
-    {
-        for(int i = 0; i < _items.Count; i++)
-        {
-            _inventorySlots[i].SetItem(_items[i]);
-            _inventorySlots[i].UpdateInventorySlot();
-        }
-    }
-
     public bool AddItem(Item newItem)
     {
-        foreach(Item existingItem in _items)
+        for(int i = 0; i < _inventorySlots.Length; i++)
         {
-            if(existingItem == newItem)
+            if(_inventorySlots[i].GetItem() == newItem)
             {
-                if(_inventorySlots[_items.IndexOf(existingItem)].AddOneItem())
+                if(_inventorySlots[i].AddOneItem())
                 {
                     Debug.Log(newItem.name + " added to existing stack.");
-                    _updateInventorySlots();
-                    
+                    _inventorySlots[i].UpdateInventorySlot();
+
                     return true;
                 }
                 else
@@ -63,10 +53,20 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        if (_items.Count < _inventoryCapacity)
+        int filledInventorySpaceCounter = 0;
+
+        for(int i = 0; i < _inventorySlots.Length; i++)
         {
-            _items.Add(newItem);
-            _updateInventorySlots();
+            if(_inventorySlots[i].GetItem() != null)
+            {
+                filledInventorySpaceCounter++;
+            }
+        }
+
+        if(filledInventorySpaceCounter < _inventoryCapacity)
+        {
+            _inventorySlots[filledInventorySpaceCounter].SetItem(newItem);
+            _inventorySlots[filledInventorySpaceCounter].UpdateInventorySlot();
 
             Debug.Log(newItem.name + " picked up.");
 
@@ -75,12 +75,6 @@ public class Inventory : MonoBehaviour
 
         Debug.Log("Can't pick up " + newItem.name + ".");
         return false;
-    }
-
-    public void RemoveItem(Item removedItem)
-    {
-        _items.Remove(removedItem);
-        _updateInventorySlots();
     }
 
     public void SetTemporaryItemData(InventorySlot inventorySlot)

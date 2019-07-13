@@ -17,11 +17,24 @@ public class InventorySlot : EventTrigger
         _icon.enabled = false;
     }
 
+    private void _updateStackCountText()
+    {
+        if(_stackCount >= 2)
+        {
+            _stackText.text = _stackCount.ToString();
+        }
+        else
+        {
+            _stackText.text = "";
+        }
+    }
+
     public void SetItem(Item newItem)
     {
         if(newItem == null)
         {
             ClearSlot();
+            return;
         }
 
         _item = newItem;
@@ -32,10 +45,8 @@ public class InventorySlot : EventTrigger
         {
             _stackCount++;
         }
-        else if (_stackCount >= 2)
-        {
-            _stackText.text = _stackCount.ToString();
-        }
+
+        _updateStackCountText();
     }
 
     public void ClearSlot()
@@ -59,10 +70,7 @@ public class InventorySlot : EventTrigger
 
             _stackCount++;
 
-            if (_stackCount >= 2)
-            {
-                _stackText.text = _stackCount.ToString();
-            }
+            _updateStackCountText();
 
             return true;
         }
@@ -78,10 +86,8 @@ public class InventorySlot : EventTrigger
         {
             ClearSlot();
         }
-        else if(_stackCount >= 2)
-        {
-            _stackText.text = _stackCount.ToString();
-        }
+
+        _updateStackCountText();
     }
 
     public int GetStackCount()
@@ -92,20 +98,24 @@ public class InventorySlot : EventTrigger
     public void SetStackCount(int stackCount)
     {
         _stackCount = stackCount;
-    }
 
-    public void UpdateInventorySlot()
-    {
-        _icon.sprite = _item.Icon;
-        if (_stackCount >= 2)
-        {
-            _stackText.text = _stackCount.ToString();
-        }
+        _updateStackCountText();
     }
 
     public Item GetItem()
     {
         return _item;
+    }
+
+    public void UpdateInventorySlot()
+    {
+        if(_item == null)
+        {
+            return;
+        }
+
+        _icon.sprite = _item.Icon;
+        _updateStackCountText();
     }
 
     public override void OnPointerDown(PointerEventData eventData)
