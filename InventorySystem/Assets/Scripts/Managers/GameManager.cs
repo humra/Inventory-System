@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
         }
 
         Inventory.Instance.InventoryInteractionHandler = this;
+        Inventory.Instance.ItemHoverHandler = this;
     }
 
     private void _setAnimatorParameters()

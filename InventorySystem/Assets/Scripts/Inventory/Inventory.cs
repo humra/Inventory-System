@@ -32,6 +32,7 @@ public class Inventory : MonoBehaviour
     private EquipmentSlot[] _equipmentSlots;
 
     public IInventoryInteractionHandler InventoryInteractionHandler;
+    public IItemHoverHandler ItemHoverHandler;
 
     private void Start()
     {
@@ -215,6 +216,14 @@ public class Inventory : MonoBehaviour
                 {
                     _equipmentSlots[i].SetItem(equipmentCast);
                     inventorySlot.ClearSlot();
+                    ItemHoverHandler.StopShowingItemInfo();
+                }
+                else
+                {
+                    Item swapItem = _equipmentSlots[i].GetItem();
+                    _equipmentSlots[i].SetItem(equipmentCast);
+                    inventorySlot.SetItem(swapItem);
+                    ItemHoverHandler.StopShowingItemInfo();
                 }
             }
         }
