@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Inventory : MonoBehaviour
 {
@@ -37,6 +38,16 @@ public class Inventory : MonoBehaviour
         _inventoryCapacity = _inventorySlots.Length;
         _itemHover = GameObject.FindObjectOfType<ItemHover>();
         _itemHover.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && _temporaryItem != null)
+        {
+            DropItem(_inventorySlots[_originIndex], _temporaryItem);
+            _stopFollowingCursor();
+            ClearTemporaryItem();
+        }
     }
 
     private void _startFollowingCursor()
@@ -144,6 +155,12 @@ public class Inventory : MonoBehaviour
     public void DropItem(InventorySlot inventorySlot)
     {
         InventoryInteractionHandler.DropItem(inventorySlot.GetItem());
+        _inventorySlots[GetIndexOfInventorySlot(inventorySlot)].ClearSlot();
+    }
+
+    public void DropItem(InventorySlot inventorySlot, Item item)
+    {
+        InventoryInteractionHandler.DropItem(item);
         _inventorySlots[GetIndexOfInventorySlot(inventorySlot)].ClearSlot();
     }
 
