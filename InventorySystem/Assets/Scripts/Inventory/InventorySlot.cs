@@ -125,24 +125,37 @@ public class InventorySlot : EventTrigger
             switch (eventData.button)
             {
                 case PointerEventData.InputButton.Left:
+                    if (Input.GetKey(KeyCode.LeftControl))
+                    {
+                        Inventory.Instance.DropItem(this);
+                        break;
+                    }
                     Debug.Log("Left click");
                     Inventory.Instance.SetTemporaryItemData(this);
                     break;
+
                 case PointerEventData.InputButton.Right:
                     Debug.Log("Right click");
                     break;
+
                 case PointerEventData.InputButton.Middle:
                     Debug.Log("Middle click");
                     break;
             }
         }
-        else if(eventData.button == PointerEventData.InputButton.Left && Inventory.Instance.TemporaryItemExists() && _item == null)
+        else if(eventData.button == PointerEventData.InputButton.Left)
         {
-            Inventory.Instance.SwapItemToDestination(this);
-        }
-        else if(eventData.button == PointerEventData.InputButton.Left && Inventory.Instance.TemporaryItemExists() && _item != null)
-        {
-            Inventory.Instance.SwapItems(this);
+            if(Inventory.Instance.TemporaryItemExists())
+            {
+                if (_item == null)
+                {
+                    Inventory.Instance.SwapItemToDestination(this);
+                }
+                else
+                {
+                    Inventory.Instance.SwapItems(this);
+                }
+            }
         }
     }
 }

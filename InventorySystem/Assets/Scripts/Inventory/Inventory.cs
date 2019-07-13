@@ -29,6 +29,8 @@ public class Inventory : MonoBehaviour
     private int _destinationIndex;
     private ItemHover _itemHover;
 
+    public IInventoryInteractionHandler InventoryInteractionHandler;
+
     private void Start()
     {
         _inventorySlots = GameObject.FindObjectsOfType<InventorySlot>();
@@ -137,6 +139,12 @@ public class Inventory : MonoBehaviour
         _inventorySlots[_originIndex].SetStackCount(_temporaryStackCount);
         ClearTemporaryItem();
         _stopFollowingCursor();
+    }
+
+    public void DropItem(InventorySlot inventorySlot)
+    {
+        InventoryInteractionHandler.DropItem(inventorySlot.GetItem());
+        _inventorySlots[GetIndexOfInventorySlot(inventorySlot)].ClearSlot();
     }
 
     public bool TemporaryItemExists()
