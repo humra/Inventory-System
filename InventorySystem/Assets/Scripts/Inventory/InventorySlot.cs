@@ -2,12 +2,14 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlot : EventTrigger
+public class InventorySlot : EventTrigger, IPointerEnterHandler, IPointerExitHandler
 {
     private Item _item;
     private Image _icon;
     private Text _stackText;
     private int _stackCount = 0;
+
+    public IItemHoverHandler ItemHoverHandler;
 
     private void Start()
     {
@@ -157,5 +159,25 @@ public class InventorySlot : EventTrigger
                 }
             }
         }
+    }
+
+    public void OnPointerEnter(PointerEventData pointerEventData)
+    {
+        if(_item == null)
+        {
+            return;
+        }
+
+        ItemHoverHandler.ShowItemInfo(_item);
+    }
+
+    public void OnPointerExit(PointerEventData pointerEventData)
+    {
+        if (_item == null)
+        {
+            return;
+        }
+
+        ItemHoverHandler.StopShowingItemInfo();
     }
 }

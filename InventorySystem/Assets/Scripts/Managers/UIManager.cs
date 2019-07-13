@@ -17,6 +17,8 @@ public class UIManager : MonoBehaviour
     private Text _wis;
     private Text _cha;
 
+    private Text _hoverText;
+
     private void Start()
     {
         _inventoryPanel = GameObject.Find("Inventory");
@@ -35,9 +37,12 @@ public class UIManager : MonoBehaviour
 
         _updateAttributeValues();
 
+        _hoverText = GameObject.Find("HoverText").GetComponent<Text>();
+
         _inventoryPanel.SetActive(false);
         _equipmentPanel.SetActive(false);
         _attributesPanel.SetActive(false);
+        _hoverText.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -53,6 +58,11 @@ public class UIManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.C))
         {
             ToggleAttributes();
+        }
+
+        if(_hoverText.gameObject.activeSelf)
+        {
+            _hoverText.transform.position = Input.mousePosition;
         }
     }
 
@@ -91,5 +101,16 @@ public class UIManager : MonoBehaviour
     public void UpdateAttributes()
     {
         _updateAttributeValues();
+    }
+
+    public void ShowHoverText(string itemName)
+    {
+        _hoverText.gameObject.SetActive(true);
+        _hoverText.text = itemName;
+    }
+
+    public void HideHoverText()
+    {
+        _hoverText.gameObject.SetActive(false);
     }
 }

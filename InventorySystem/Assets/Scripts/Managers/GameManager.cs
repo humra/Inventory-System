@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteractionHandler
+public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteractionHandler, IItemHoverHandler
 {
     private PlayerController _playerController;
     private PlayerAnimator _playerAnimator;
@@ -44,6 +44,11 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
             itemPickup.ItemPickupHandler = this;
         }
 
+        foreach(InventorySlot inventorySlot in GameObject.FindObjectsOfType<InventorySlot>())
+        {
+            inventorySlot.ItemHoverHandler = this;
+        }
+
         Inventory.Instance.InventoryInteractionHandler = this;
     }
 
@@ -68,6 +73,16 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
         newPickup.GetComponent<ItemPickup>().SetItem(item);
         newPickup.GetComponent<ItemPickup>().ItemPickupHandler = this;
     }
+
+    public void ShowItemInfo(Item item)
+    {
+        _uiManager.ShowHoverText(item.Name);
+    }
+
+    public void StopShowingItemInfo()
+    {
+        _uiManager.HideHoverText();
+    }
 }
 
 public interface IItemPickupHandler
@@ -79,4 +94,10 @@ public interface IItemPickupHandler
 public interface IInventoryInteractionHandler
 {
     void DropItem(Item item);
+}
+
+public interface IItemHoverHandler
+{
+    void ShowItemInfo(Item item);
+    void StopShowingItemInfo();
 }
