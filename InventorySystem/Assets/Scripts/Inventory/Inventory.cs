@@ -95,6 +95,7 @@ public class Inventory : MonoBehaviour
         inventorySlot.SetItem(_temporaryItem);
         inventorySlot.SetStackCount(_temporaryStackCount);
         _inventorySlots[_originIndex].ClearSlot();
+        ClearTemporaryItem();
     }
 
     public bool TemporaryItemExists()
