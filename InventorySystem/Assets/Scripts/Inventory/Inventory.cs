@@ -26,11 +26,26 @@ public class Inventory : MonoBehaviour
     private Item _temporaryItem;
     private int _temporaryStackCount;
     private int _originIndex;
+    private ItemHover _itemHover;
 
     private void Start()
     {
         _inventorySlots = GameObject.FindObjectsOfType<InventorySlot>();
         _inventoryCapacity = _inventorySlots.Length;
+        _itemHover = GameObject.FindObjectOfType<ItemHover>();
+        _itemHover.gameObject.SetActive(false);
+    }
+
+    private void _startFollowingCursor()
+    {
+        _itemHover.gameObject.SetActive(true);
+        _itemHover._image.sprite = _temporaryItem.Icon;
+        _itemHover._text.text = _temporaryStackCount.ToString();
+    }
+
+    private void _stopFollowingCursor()
+    {
+        _itemHover.gameObject.SetActive(false);
     }
 
     public bool AddItem(Item newItem)
@@ -82,6 +97,7 @@ public class Inventory : MonoBehaviour
         _temporaryItem = inventorySlot.GetItem();
         _temporaryStackCount = inventorySlot.GetStackCount();
         _originIndex = GetIndexOfInventorySlot(inventorySlot);
+        _startFollowingCursor();
     }
 
     public void SwapItemToDestination(InventorySlot inventorySlot)
@@ -89,6 +105,7 @@ public class Inventory : MonoBehaviour
         inventorySlot.SetItem(_temporaryItem);
         inventorySlot.SetStackCount(_temporaryStackCount);
         _inventorySlots[_originIndex].ClearSlot();
+        _stopFollowingCursor();
         ClearTemporaryItem();
     }
 
