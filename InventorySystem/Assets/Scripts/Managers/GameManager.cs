@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 
-public class GameManager : MonoBehaviour, IItemPickupHandler
+public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteractionHandler, IItemHoverHandler
 {
     private PlayerController _playerController;
     private PlayerAnimator _playerAnimator;
     private UIManager _uiManager;
     private Inventory _inventory;
+
+    public GameObject PickupPrefab;
+    public Item[] ExistingItems;
 
     private void Start()
     {
@@ -20,6 +23,18 @@ public class GameManager : MonoBehaviour, IItemPickupHandler
     private void Update()
     {
         _setAnimatorParameters();
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            _instantiateRandomItem();
+        }
+    }
+
+    private void _instantiateRandomItem()
+    {
+        GameObject newPickup = Instantiate(PickupPrefab, _playerController.transform.position, Quaternion.identity);
+        newPickup.GetComponent<ItemPickup>().SetItem(ExistingItems[Random.Range(0, ExistingItems.Length)]);
+        newPickup.GetComponent<ItemPickup>().ItemPickupHandler = this;
     }
 
     private void _injectInterfaceDependencies()
@@ -28,6 +43,13 @@ public class GameManager : MonoBehaviour, IItemPickupHandler
         {
             itemPickup.ItemPickupHandler = this;
         }
+
+        foreach(InventorySlot inventorySlot in GameObject.FindObjectsOfType<InventorySlot>())
+        {
+            inventorySlot.ItemHoverHandler = this;
+        }
+
+        Inventory.Instance.InventoryInteractionHandler = this;
     }
 
     private void _setAnimatorParameters()
@@ -44,10 +66,38 @@ public class GameManager : MonoBehaviour, IItemPickupHandler
     {
         _uiManager.UpdateAttributes();
     }
+
+    public void DropItem(Item item)
+    {
+        GameObject newPickup = Instantiate(PickupPrefab, _playerController.transform.position, Quaternion.identity);
+        newPickup.GetComponent<ItemPickup>().SetItem(item);
+        newPickup.GetComponent<ItemPickup>().ItemPickupHandler = this;
+    }
+
+    public void ShowItemInfo(Item item)
+    {
+        _uiManager.ShowHoverText(item.Name);
+    }
+
+    public void StopShowingItemInfo()
+    {
+        _uiManager.HideHoverText();
+    }
 }
 
 public interface IItemPickupHandler
 {
     bool IsPlayerWithinInteractibleRange(Vector3 itemPosition, float interactibleDistance);
     void UpdateAttributesUI();
+}
+
+public interface IInventoryInteractionHandler
+{
+    void DropItem(Item item);
+}
+
+public interface IItemHoverHandler
+{
+    void ShowItemInfo(Item item);
+    void StopShowingItemInfo();
 }

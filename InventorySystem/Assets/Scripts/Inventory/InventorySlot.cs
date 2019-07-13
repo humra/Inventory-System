@@ -1,23 +1,44 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour
+public class InventorySlot : EventTrigger, IPointerEnterHandler, IPointerExitHandler
 {
     private Item _item;
     private Image _icon;
     private Text _stackText;
     private int _stackCount = 0;
 
+    public IItemHoverHandler ItemHoverHandler;
+
     private void Start()
     {
-        _icon = transform.Find("ItemButton/Image").GetComponent<Image>();
-        _stackText = transform.Find("ItemButton/StackCount").GetComponent<Text>();
+        _icon = transform.Find("ContentParent/Image").GetComponent<Image>();
+        _stackText = transform.Find("ContentParent/StackCount").GetComponent<Text>();
         _stackText.text = "";
         _icon.enabled = false;
     }
 
-    public void AddItem(Item newItem)
+    private void _updateStackCountText()
     {
+        if(_stackCount >= 2)
+        {
+            _stackText.text = _stackCount.ToString();
+        }
+        else
+        {
+            _stackText.text = "";
+        }
+    }
+
+    public void SetItem(Item newItem)
+    {
+        if(newItem == null)
+        {
+            ClearSlot();
+            return;
+        }
+
         _item = newItem;
         _icon.sprite = newItem.Icon;
         _icon.enabled = true;
@@ -26,10 +47,8 @@ public class InventorySlot : MonoBehaviour
         {
             _stackCount++;
         }
-        else if (_stackCount >= 2)
-        {
-            _stackText.text = _stackCount.ToString();
-        }
+
+        _updateStackCountText();
     }
 
     public void ClearSlot()
@@ -53,10 +72,7 @@ public class InventorySlot : MonoBehaviour
 
             _stackCount++;
 
-            if (_stackCount >= 2)
-            {
-                _stackText.text = _stackCount.ToString();
-            }
+            _updateStackCountText();
 
             return true;
         }
@@ -72,10 +88,8 @@ public class InventorySlot : MonoBehaviour
         {
             ClearSlot();
         }
-        else if(_stackCount >= 2)
-        {
-            _stackText.text = _stackCount.ToString();
-        }
+
+        _updateStackCountText();
     }
 
     public int GetStackCount()
@@ -83,12 +97,87 @@ public class InventorySlot : MonoBehaviour
         return _stackCount;
     }
 
+    public void SetStackCount(int stackCount)
+    {
+        _stackCount = stackCount;
+
+        _updateStackCountText();
+    }
+
+    public Item GetItem()
+    {
+        return _item;
+    }
+
     public void UpdateInventorySlot()
     {
-        _icon.sprite = _item.Icon;
-        if (_stackCount >= 2)
+        if(_item == null)
         {
-            _stackText.text = _stackCount.ToString();
+            return;
         }
+
+        _icon.sprite = _item.Icon;
+        _updateStackCountText();
+    }
+
+    public override void OnPointerDown(PointerEventData eventData)
+    {
+        if(_item != null && !Inventory.Instance.TemporaryItemExists())
+        {
+            switch (eventData.button)
+            {
+                case PointerEventData.InputButton.Left:
+                    if (Input.GetKey(KeyCode.LeftControl))
+                    {
+                        Inventory.Instance.DropItem(this);
+                        break;
+                    }
+                    Debug.Log("Left click");
+                    Inventory.Instance.SetTemporaryItemData(this);
+                    break;
+
+                case PointerEventData.InputButton.Right:
+                    Debug.Log("Right click");
+                    break;
+
+                case PointerEventData.InputButton.Middle:
+                    Debug.Log("Middle click");
+                    break;
+            }
+        }
+        else if(eventData.button == PointerEventData.InputButton.Left)
+        {
+            if(Inventory.Instance.TemporaryItemExists())
+            {
+                if (_item == null)
+                {
+                    Inventory.Instance.SwapItemToDestination(this);
+                }
+                else
+                {
+                    Inventory.Instance.SwapItems(this);
+                }
+            }
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData pointerEventData)
+    {
+        if(_item == null)
+        {
+            return;
+        }
+
+        ItemHoverHandler.ShowItemInfo(_item);
+    }
+
+    public void OnPointerExit(PointerEventData pointerEventData)
+    {
+        if (_item == null)
+        {
+            return;
+        }
+
+        ItemHoverHandler.StopShowingItemInfo();
     }
 }
