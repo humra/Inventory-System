@@ -103,6 +103,7 @@ public class Inventory : MonoBehaviour
         }
 
         Debug.Log("Can't pick up " + newItem.name + ".");
+        InventoryInteractionHandler.ShowInfoMessage("Can't pick up " + newItem.Name + ".");
         return false;
     }
 

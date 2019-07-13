@@ -83,6 +83,11 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
     {
         _uiManager.HideHoverText();
     }
+
+    public void ShowInfoMessage(string message)
+    {
+        _uiManager.ShowInfoMessage(message);
+    }
 }
 
 public interface IItemPickupHandler
@@ -94,6 +99,7 @@ public interface IItemPickupHandler
 public interface IInventoryInteractionHandler
 {
     void DropItem(Item item);
+    void ShowInfoMessage(string message);
 }
 
 public interface IItemHoverHandler

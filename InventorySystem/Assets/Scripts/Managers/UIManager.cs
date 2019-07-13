@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     private Text _cha;
 
     private Text _hoverText;
+    private Text _infoText;
 
     private void Start()
     {
@@ -38,11 +39,13 @@ public class UIManager : MonoBehaviour
         _updateAttributeValues();
 
         _hoverText = GameObject.Find("HoverText").GetComponent<Text>();
+        _infoText = GameObject.Find("InfoText").GetComponent<Text>();
 
         _inventoryPanel.SetActive(false);
         _equipmentPanel.SetActive(false);
         _attributesPanel.SetActive(false);
         _hoverText.gameObject.SetActive(false);
+        _infoText.text = "";
     }
 
     private void Update()
@@ -112,5 +115,10 @@ public class UIManager : MonoBehaviour
     public void HideHoverText()
     {
         _hoverText.gameObject.SetActive(false);
+    }
+
+    public void ShowInfoMessage(string message)
+    {
+        _infoText.text = message;
     }
 }
