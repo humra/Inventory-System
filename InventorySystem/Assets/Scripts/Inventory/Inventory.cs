@@ -109,6 +109,14 @@ public class Inventory : MonoBehaviour
         ClearTemporaryItem();
     }
 
+    public void CancelItemSwap()
+    {
+        _inventorySlots[_originIndex].SetItem(_temporaryItem);
+        _inventorySlots[_originIndex].SetStackCount(_temporaryStackCount);
+        ClearTemporaryItem();
+        _stopFollowingCursor();
+    }
+
     public bool TemporaryItemExists()
     {
         return _temporaryItem != null;
@@ -117,6 +125,7 @@ public class Inventory : MonoBehaviour
     public void ClearTemporaryItem()
     {
         _temporaryItem = null;
+        _temporaryStackCount = -1;
     }
 
     public int GetIndexOfInventorySlot(InventorySlot inventorySlot)

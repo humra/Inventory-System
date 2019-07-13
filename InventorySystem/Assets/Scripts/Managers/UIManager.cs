@@ -70,6 +70,10 @@ public class UIManager : MonoBehaviour
     {
         _inventoryPanel.SetActive(!_inventoryPanel.activeSelf);
         _inventoryButton.SetActive(!_inventoryButton.activeSelf);
+
+        if(!_inventoryPanel.activeSelf && Inventory.Instance.TemporaryItemExists()) {
+            Inventory.Instance.CancelItemSwap();
+        }
     }
 
     public void ToggleEquipment()

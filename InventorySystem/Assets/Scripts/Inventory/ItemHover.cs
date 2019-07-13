@@ -8,8 +8,8 @@ public class ItemHover : MonoBehaviour
 
     private void Start()
     {
-        _image = GetComponentInChildren<Image>();
-        _text = GetComponentInChildren<Text>();
+        //_image = GetComponentInChildren<Image>();
+        //_text = GetComponentInChildren<Text>();
     }
 
     private void Update()
