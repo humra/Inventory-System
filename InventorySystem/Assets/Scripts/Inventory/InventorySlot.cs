@@ -7,13 +7,15 @@ public class InventorySlot : MonoBehaviour
     private Image _icon;
     private Text _stackText;
     private int _stackCount = 0;
+    private ItemButton _itemButton;
 
     private void Start()
     {
-        _icon = transform.Find("ItemButton/Image").GetComponent<Image>();
-        _stackText = transform.Find("ItemButton/StackCount").GetComponent<Text>();
+        _icon = transform.Find("ItemButton/ContentParent/Image").GetComponent<Image>();
+        _stackText = transform.Find("ItemButton/ContentParent/StackCount").GetComponent<Text>();
         _stackText.text = "";
         _icon.enabled = false;
+        _itemButton = GetComponentInChildren<ItemButton>();
     }
 
     public void AddItem(Item newItem)
@@ -30,6 +32,8 @@ public class InventorySlot : MonoBehaviour
         {
             _stackText.text = _stackCount.ToString();
         }
+
+        _itemButton.HasItem = true;
     }
 
     public void ClearSlot()
@@ -39,6 +43,7 @@ public class InventorySlot : MonoBehaviour
         _icon.enabled = false;
         _stackCount = 0;
         _stackText.text = "";
+        _itemButton.HasItem = false;
     }
 
     public bool AddOneItem()
