@@ -26,6 +26,7 @@ public class Inventory : MonoBehaviour
     private Item _temporaryItem;
     private int _temporaryStackCount;
     private int _originIndex;
+    private int _destinationIndex;
     private ItemHover _itemHover;
 
     private void Start()
@@ -97,14 +98,23 @@ public class Inventory : MonoBehaviour
         _temporaryItem = inventorySlot.GetItem();
         _temporaryStackCount = inventorySlot.GetStackCount();
         _originIndex = GetIndexOfInventorySlot(inventorySlot);
+
         _startFollowingCursor();
+
+        inventorySlot.ClearSlot();
     }
 
     public void SwapItemToDestination(InventorySlot inventorySlot)
     {
         inventorySlot.SetItem(_temporaryItem);
         inventorySlot.SetStackCount(_temporaryStackCount);
-        _inventorySlots[_originIndex].ClearSlot();
+        _destinationIndex = GetIndexOfInventorySlot(inventorySlot);
+
+        if(_originIndex != _destinationIndex)
+        {
+            _inventorySlots[_originIndex].ClearSlot();
+        }
+
         _stopFollowingCursor();
         ClearTemporaryItem();
     }
