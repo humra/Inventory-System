@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour, IItemPickupHandler
     private UIManager _uiManager;
     private Inventory _inventory;
 
+    public GameObject PickupPrefab;
+    public Item[] ExistingItems;
+
     private void Start()
     {
         _playerController = FindObjectOfType<PlayerController>();
@@ -20,6 +23,18 @@ public class GameManager : MonoBehaviour, IItemPickupHandler
     private void Update()
     {
         _setAnimatorParameters();
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            _instantiateRandomItem();
+        }
+    }
+
+    private void _instantiateRandomItem()
+    {
+        GameObject newPickup = Instantiate(PickupPrefab, _playerController.transform.position, Quaternion.identity);
+        newPickup.GetComponent<ItemPickup>().SetItem(ExistingItems[Random.Range(0, ExistingItems.Length)]);
+        newPickup.GetComponent<ItemPickup>().ItemPickupHandler = this;
     }
 
     private void _injectInterfaceDependencies()

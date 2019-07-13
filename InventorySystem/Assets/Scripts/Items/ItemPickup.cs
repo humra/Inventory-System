@@ -11,7 +11,10 @@ public class ItemPickup : MonoBehaviour
 
     private void Start()
     {
-        GetComponent<SpriteRenderer>().sprite = _item.Icon;
+        if(_item != null)
+        {
+            _setSprite();
+        }
     }
 
     private void OnMouseDown()
@@ -20,6 +23,11 @@ public class ItemPickup : MonoBehaviour
         {
             _pickUp();
         }
+    }
+
+    private void _setSprite()
+    {
+        GetComponent<SpriteRenderer>().sprite = _item.Icon;
     }
 
     private void _pickUp()
@@ -47,5 +55,11 @@ public class ItemPickup : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public void SetItem(Item newItem)
+    {
+        _item = newItem;
+        _setSprite();
     }
 }
