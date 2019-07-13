@@ -120,7 +120,7 @@ public class InventorySlot : EventTrigger
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        if(_item != null)
+        if(_item != null && !Inventory.Instance.TemporaryItemExists())
         {
             switch (eventData.button)
             {
@@ -136,12 +136,13 @@ public class InventorySlot : EventTrigger
                     break;
             }
         }
-        else
+        else if(eventData.button == PointerEventData.InputButton.Left && Inventory.Instance.TemporaryItemExists() && _item == null)
         {
-            if(eventData.button == PointerEventData.InputButton.Left && Inventory.Instance.TemporaryItemExists())
-            {
-                Inventory.Instance.SwapItemToDestination(this);
-            }
+            Inventory.Instance.SwapItemToDestination(this);
+        }
+        else if(eventData.button == PointerEventData.InputButton.Left && Inventory.Instance.TemporaryItemExists() && _item != null)
+        {
+            Inventory.Instance.SwapItems(this);
         }
     }
 }

@@ -119,6 +119,18 @@ public class Inventory : MonoBehaviour
         ClearTemporaryItem();
     }
 
+    public void SwapItems(InventorySlot inventorySlot)
+    {
+        Item tempItem = inventorySlot.GetItem();
+        int tempStackCount = inventorySlot.GetStackCount();
+        _destinationIndex = GetIndexOfInventorySlot(inventorySlot);
+
+        SwapItemToDestination(inventorySlot);
+
+        _inventorySlots[_originIndex].SetItem(tempItem);
+        _inventorySlots[_originIndex].SetStackCount(tempStackCount);
+    }
+
     public void CancelItemSwap()
     {
         _inventorySlots[_originIndex].SetItem(_temporaryItem);
