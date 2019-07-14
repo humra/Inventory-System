@@ -264,15 +264,32 @@ public class Inventory : MonoBehaviour
         _inventorySlots[_findFirstEmptySlotIndex()].SetItem(equipmentSlot.GetItem());
         _inventorySlots[_findFirstEmptySlotIndex()].UpdateInventorySlot();
         equipmentSlot.ClearSlot();
+    }
 
-        //int filledInventorySpaceCounter = _countFilledInventorySpaces();
+    public bool TemporaryItemMatchesSlot(EnumEquipmentSlot equipmentSlot)
+    {
+        if(_temporaryItem.GetType() != typeof(Equipment))
+        {
+            return false;
+        }
 
-        //if (filledInventorySpaceCounter < _inventoryCapacity)
-        //{
-        //    _inventorySlots[filledInventorySpaceCounter].SetItem(equipmentSlot.GetItem());
-        //    _inventorySlots[filledInventorySpaceCounter].UpdateInventorySlot();
-        //    equipmentSlot.ClearSlot();
-        //}
+        Equipment tempEquipment = (Equipment)_temporaryItem;
+        if(tempEquipment.EquipmentSlot != equipmentSlot)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public void EquipTemporaryItem(EquipmentSlot equipmentSlot)
+    {
+        equipmentSlot.SetItem((Equipment)_temporaryItem);
+
+        _inventorySlots[_originIndex].ClearSlot();
+        _stopFollowingCursor();
+        ClearTemporaryItem();
+        ItemHoverHandler.StopShowingItemInfo();
     }
 
     #endregion

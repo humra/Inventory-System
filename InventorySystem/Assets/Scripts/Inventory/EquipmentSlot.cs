@@ -53,7 +53,10 @@ public class EquipmentSlot : EventTrigger
         switch(eventData.button)
         {
             case PointerEventData.InputButton.Left:
-                Debug.Log("Left click");
+                if(_item == null && Inventory.Instance.TemporaryItemExists() && Inventory.Instance.TemporaryItemMatchesSlot(EquipmentType))
+                {
+                    Inventory.Instance.EquipTemporaryItem(this);
+                }
                 break;
 
             case PointerEventData.InputButton.Right:
