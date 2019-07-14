@@ -103,6 +103,20 @@ public class Inventory : MonoBehaviour
 
     public bool AddItem(Item newItem)
     {
+        if(newItem.GetType() == typeof(Equipment))
+        {
+            Equipment itemCast = (Equipment)newItem;
+
+            for (int i = 0; i < _equipmentSlots.Length; i++)
+            {
+                if(_equipmentSlots[i].EquipmentType == itemCast.EquipmentSlot && _equipmentSlots[i].GetItem() == null)
+                {
+                    _equipmentSlots[i].SetItem(itemCast);
+                    return true;
+                }
+            }
+        }
+
         for(int i = 0; i < _inventorySlots.Length; i++)
         {
             if(_inventorySlots[i].GetItem() == newItem)
@@ -159,6 +173,7 @@ public class Inventory : MonoBehaviour
             _inventorySlots[_originIndex].ClearSlot();
         }
 
+        _inventorySlots[_originIndex].StopHighlight();
         _stopFollowingCursor();
         ClearTemporaryItem();
     }
@@ -168,7 +183,6 @@ public class Inventory : MonoBehaviour
         Item tempItem = inventorySlot.GetItem();
         int tempStackCount = inventorySlot.GetStackCount();
         _destinationIndex = GetIndexOfInventorySlot(inventorySlot);
-
         SwapItemToDestination(inventorySlot);
 
         _inventorySlots[_originIndex].SetItem(tempItem);
@@ -191,6 +205,7 @@ public class Inventory : MonoBehaviour
         }
         _inventorySlots[GetIndexOfInventorySlot(inventorySlot)].ClearSlot();
         ItemHoverHandler.StopShowingItemInfo();
+        inventorySlot.StopHighlight();
     }
 
     public void DropItem(InventorySlot inventorySlot, Item item)
@@ -201,6 +216,7 @@ public class Inventory : MonoBehaviour
         }
         _inventorySlots[GetIndexOfInventorySlot(inventorySlot)].ClearSlot();
         ItemHoverHandler.StopShowingItemInfo();
+        inventorySlot.StopHighlight();
     }
 
     public bool TemporaryItemExists()
@@ -250,6 +266,7 @@ public class Inventory : MonoBehaviour
                     _equipmentSlots[i].SetItem(equipmentCast);
                     inventorySlot.ClearSlot();
                     ItemHoverHandler.StopShowingItemInfo();
+                    break;
                 }
                 else
                 {
@@ -257,9 +274,12 @@ public class Inventory : MonoBehaviour
                     _equipmentSlots[i].SetItem(equipmentCast);
                     inventorySlot.SetItem(swapItem);
                     ItemHoverHandler.StopShowingItemInfo();
+                    break;
                 }
             }
         }
+
+        inventorySlot.StopHighlight();
     }
 
     public void Unequip(EquipmentSlot equipmentSlot)

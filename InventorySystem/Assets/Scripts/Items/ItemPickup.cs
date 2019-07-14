@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ItemPickup : MonoBehaviour
 {
@@ -7,14 +8,21 @@ public class ItemPickup : MonoBehaviour
     [SerializeField]
     private Item _item;
 
+    private SpriteRenderer _image;
+    private Color _originalColor;
+
     public IItemPickupHandler ItemPickupHandler;
 
     private void Start()
     {
+        _image = GetComponent<SpriteRenderer>();
+
         if(_item != null)
         {
             _setSprite();
         }
+
+        _originalColor = _image.color;
     }
 
     private void OnMouseDown()
@@ -27,7 +35,32 @@ public class ItemPickup : MonoBehaviour
 
     private void _setSprite()
     {
-        GetComponent<SpriteRenderer>().sprite = _item.Icon;
+        if(_item == null)
+        {
+            return;
+        }
+
+        _image.sprite = _item.Icon;
+    }
+
+    private void _highlight()
+    {
+        _image.color = Color.cyan;
+    }
+
+    private void _stopHighlight()
+    {
+        _image.color = _originalColor;
+    }
+
+    private void OnMouseEnter()
+    {
+        _highlight();
+    }
+
+    private void OnMouseExit()
+    {
+        _stopHighlight();
     }
 
     private void _pickUp()

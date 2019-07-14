@@ -6,6 +6,8 @@ public class InventorySlot : EventTrigger, IPointerEnterHandler, IPointerExitHan
 {
     private Item _item;
     private Image _icon;
+    private Image _panelImage;
+    private Color _originalColor;
     private Text _stackText;
     private int _stackCount = 0;
 
@@ -15,6 +17,8 @@ public class InventorySlot : EventTrigger, IPointerEnterHandler, IPointerExitHan
     {
         _icon = transform.Find("ContentParent/Image").GetComponent<Image>();
         _stackText = transform.Find("ContentParent/StackCount").GetComponent<Text>();
+        _panelImage = transform.Find("ContentParent").GetComponent<Image>();
+        _originalColor = _panelImage.color;
         _stackText.text = "";
         _icon.enabled = false;
     }
@@ -29,6 +33,16 @@ public class InventorySlot : EventTrigger, IPointerEnterHandler, IPointerExitHan
         {
             _stackText.text = "";
         }
+    }
+
+    public void Highlight()
+    {
+        _panelImage.color = Color.yellow;
+    }
+
+    public void StopHighlight()
+    {
+        _panelImage.color = _originalColor;
     }
 
     public void SetItem(Item newItem)
@@ -138,10 +152,6 @@ public class InventorySlot : EventTrigger, IPointerEnterHandler, IPointerExitHan
                 case PointerEventData.InputButton.Right:
                     Inventory.Instance.EquipItem(this);
                     break;
-
-                case PointerEventData.InputButton.Middle:
-                    Debug.Log("Middle click");
-                    break;
             }
         }
         else if(eventData.button == PointerEventData.InputButton.Left)
@@ -167,6 +177,7 @@ public class InventorySlot : EventTrigger, IPointerEnterHandler, IPointerExitHan
             return;
         }
 
+        Highlight();
         ItemHoverHandler.ShowItemInfo(_item);
     }
 
@@ -177,6 +188,7 @@ public class InventorySlot : EventTrigger, IPointerEnterHandler, IPointerExitHan
             return;
         }
 
+        StopHighlight();
         ItemHoverHandler.StopShowingItemInfo();
     }
 }
