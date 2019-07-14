@@ -35,6 +35,11 @@ public class ItemPickup : MonoBehaviour
 
     private void _setSprite()
     {
+        if(_item == null)
+        {
+            return;
+        }
+
         _image.sprite = _item.Icon;
     }
 

@@ -103,6 +103,20 @@ public class Inventory : MonoBehaviour
 
     public bool AddItem(Item newItem)
     {
+        if(newItem.GetType() == typeof(Equipment))
+        {
+            Equipment itemCast = (Equipment)newItem;
+
+            for (int i = 0; i < _equipmentSlots.Length; i++)
+            {
+                if(_equipmentSlots[i].EquipmentType == itemCast.EquipmentSlot && _equipmentSlots[i].GetItem() == null)
+                {
+                    _equipmentSlots[i].SetItem(itemCast);
+                    return true;
+                }
+            }
+        }
+
         for(int i = 0; i < _inventorySlots.Length; i++)
         {
             if(_inventorySlots[i].GetItem() == newItem)
