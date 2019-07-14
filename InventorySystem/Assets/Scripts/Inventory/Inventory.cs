@@ -185,14 +185,22 @@ public class Inventory : MonoBehaviour
 
     public void DropItem(InventorySlot inventorySlot)
     {
-        InventoryInteractionHandler.DropItem(inventorySlot.GetItem());
+        for(int i = 1; i <= inventorySlot.GetStackCount(); i++)
+        {
+            InventoryInteractionHandler.DropItem(inventorySlot.GetItem());
+        }
         _inventorySlots[GetIndexOfInventorySlot(inventorySlot)].ClearSlot();
+        ItemHoverHandler.StopShowingItemInfo();
     }
 
     public void DropItem(InventorySlot inventorySlot, Item item)
     {
-        InventoryInteractionHandler.DropItem(item);
+        for(int i = 1; i <= _temporaryStackCount; i++)
+        {
+            InventoryInteractionHandler.DropItem(item);
+        }
         _inventorySlots[GetIndexOfInventorySlot(inventorySlot)].ClearSlot();
+        ItemHoverHandler.StopShowingItemInfo();
     }
 
     public bool TemporaryItemExists()
