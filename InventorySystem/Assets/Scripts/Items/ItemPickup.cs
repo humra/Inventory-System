@@ -45,6 +45,7 @@ public class ItemPickup : MonoBehaviour
                 ItemPickupHandler.UpdateAttributesUI();
 
                 Debug.Log(_item.name + " picked up.");
+                ItemPickupHandler.ShowInfoMessage(_item.name + " picked up.");
                 Destroy(gameObject);
                 break;
 

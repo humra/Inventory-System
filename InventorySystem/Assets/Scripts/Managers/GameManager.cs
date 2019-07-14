@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteractionHandler, IItemHoverHandler
+public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteractionHandler, IItemHoverHandler, IEquipmentHandler
 {
     private PlayerController _playerController;
     private PlayerAnimator _playerAnimator;
@@ -49,7 +49,13 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
             inventorySlot.ItemHoverHandler = this;
         }
 
+        foreach(EquipmentSlot equipmentSlot in GameObject.FindObjectsOfType<EquipmentSlot>())
+        {
+            equipmentSlot.EquipmentHandler = this;
+        }
+
         Inventory.Instance.InventoryInteractionHandler = this;
+        Inventory.Instance.ItemHoverHandler = this;
     }
 
     private void _setAnimatorParameters()
@@ -94,6 +100,7 @@ public interface IItemPickupHandler
 {
     bool IsPlayerWithinInteractibleRange(Vector3 itemPosition, float interactibleDistance);
     void UpdateAttributesUI();
+    void ShowInfoMessage(string message);
 }
 
 public interface IInventoryInteractionHandler
@@ -106,4 +113,9 @@ public interface IItemHoverHandler
 {
     void ShowItemInfo(Item item);
     void StopShowingItemInfo();
+}
+
+public interface IEquipmentHandler
+{
+    void UpdateAttributesUI();
 }
