@@ -136,7 +136,6 @@ public class InventorySlot : EventTrigger, IPointerEnterHandler, IPointerExitHan
                     break;
 
                 case PointerEventData.InputButton.Right:
-                    Debug.Log("Right click");
                     Inventory.Instance.EquipItem(this);
                     break;
 

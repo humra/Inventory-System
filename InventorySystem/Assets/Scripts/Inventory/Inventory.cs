@@ -65,6 +65,39 @@ public class Inventory : MonoBehaviour
         _itemHover.gameObject.SetActive(false);
     }
 
+    private int _countFilledInventorySpaces()
+    {
+        int filledInventorySpaceCounter = 0;
+
+        for (int i = 0; i < _inventorySlots.Length; i++)
+        {
+            if (_inventorySlots[i].GetItem() != null)
+            {
+                filledInventorySpaceCounter++;
+            }
+        }
+
+        return filledInventorySpaceCounter;
+    }
+
+    private bool _isInventoryFull()
+    {
+        return _countFilledInventorySpaces() >= _inventoryCapacity;
+    }
+
+    private int _findFirstEmptySlotIndex()
+    {
+        for(int i = 0; i < _inventorySlots.Length; i++)
+        {
+            if(_inventorySlots[i].GetItem() == null)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     #region Inventory
 
     public bool AddItem(Item newItem)
@@ -87,29 +120,20 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        int filledInventorySpaceCounter = 0;
-
-        for(int i = 0; i < _inventorySlots.Length; i++)
+        if (_isInventoryFull())
         {
-            if(_inventorySlots[i].GetItem() != null)
-            {
-                filledInventorySpaceCounter++;
-            }
+
+            Debug.Log("Can't pick up " + newItem.name + ".");
+            InventoryInteractionHandler.ShowInfoMessage("Can't pick up " + newItem.Name + ".");
+            return false;
         }
 
-        if(filledInventorySpaceCounter < _inventoryCapacity)
-        {
-            _inventorySlots[filledInventorySpaceCounter].SetItem(newItem);
-            _inventorySlots[filledInventorySpaceCounter].UpdateInventorySlot();
+        int firstFreeSlot = _findFirstEmptySlotIndex();
 
-            Debug.Log(newItem.name + " picked up.");
+        _inventorySlots[firstFreeSlot].SetItem(newItem);
+        _inventorySlots[firstFreeSlot].UpdateInventorySlot();
 
-            return true;
-        }
-
-        Debug.Log("Can't pick up " + newItem.name + ".");
-        InventoryInteractionHandler.ShowInfoMessage("Can't pick up " + newItem.Name + ".");
-        return false;
+        return true;
     }
 
     public void SetTemporaryItemData(InventorySlot inventorySlot)
@@ -227,6 +251,28 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void Unequip(EquipmentSlot equipmentSlot)
+    {
+        if(_isInventoryFull())
+        {
+            Debug.Log("Can't unequip item: inventory full.");
+            return;
+        }
+
+        _inventorySlots[_findFirstEmptySlotIndex()].SetItem(equipmentSlot.GetItem());
+        _inventorySlots[_findFirstEmptySlotIndex()].UpdateInventorySlot();
+        equipmentSlot.ClearSlot();
+
+        //int filledInventorySpaceCounter = _countFilledInventorySpaces();
+
+        //if (filledInventorySpaceCounter < _inventoryCapacity)
+        //{
+        //    _inventorySlots[filledInventorySpaceCounter].SetItem(equipmentSlot.GetItem());
+        //    _inventorySlots[filledInventorySpaceCounter].UpdateInventorySlot();
+        //    equipmentSlot.ClearSlot();
+        //}
     }
 
     #endregion

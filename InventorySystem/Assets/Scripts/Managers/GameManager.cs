@@ -100,6 +100,7 @@ public interface IItemPickupHandler
 {
     bool IsPlayerWithinInteractibleRange(Vector3 itemPosition, float interactibleDistance);
     void UpdateAttributesUI();
+    void ShowInfoMessage(string message);
 }
 
 public interface IInventoryInteractionHandler
