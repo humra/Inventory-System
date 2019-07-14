@@ -439,7 +439,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (19)
+      value: InventorySlot32
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -675,7 +675,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (22)
+      value: InventorySlot35
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -978,7 +978,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (15)
+      value: InventorySlot27
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -1239,7 +1239,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (12)
+      value: InventorySlot24
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -1500,7 +1500,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (10)
+      value: InventorySlot22
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -1665,6 +1665,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c169c405b9eb245affde6074023b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Delegates: []
+  delegates: []
   EquipmentType: 0
 --- !u!114 &231518517
 MonoBehaviour:
@@ -1753,6 +1755,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c169c405b9eb245affde6074023b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Delegates: []
+  delegates: []
   EquipmentType: 2
 --- !u!114 &251931460
 MonoBehaviour:
@@ -1841,6 +1845,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c169c405b9eb245affde6074023b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Delegates: []
+  delegates: []
   EquipmentType: 3
 --- !u!114 &256340265
 MonoBehaviour:
@@ -2247,7 +2253,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (21)
+      value: InventorySlot34
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -2693,7 +2699,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (6)
+      value: InventorySlot17
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -2914,7 +2920,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (2)
+      value: InventorySlot13
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -3247,7 +3253,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (14)
+      value: InventorySlot26
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -3508,7 +3514,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (7)
+      value: InventorySlot18
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -3945,6 +3951,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c169c405b9eb245affde6074023b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Delegates: []
+  delegates: []
   EquipmentType: 1
 --- !u!114 &779625106
 MonoBehaviour:
@@ -4114,7 +4122,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (16)
+      value: InventorySlot28
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -5395,7 +5403,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (20)
+      value: InventorySlot33
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -6380,7 +6388,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (23)
+      value: InventorySlot36
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -7074,7 +7082,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (5)
+      value: InventorySlot16
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -7199,7 +7207,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (8)
+      value: InventorySlot19
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -7500,6 +7508,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c169c405b9eb245affde6074023b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Delegates: []
+  delegates: []
   EquipmentType: 4
 --- !u!114 &1525936897
 MonoBehaviour:
@@ -7748,7 +7758,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (18)
+      value: InventorySlot31
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -7993,7 +8003,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (11)
+      value: InventorySlot23
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -8482,7 +8492,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (1)
+      value: InventorySlot12
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -9249,7 +9259,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (13)
+      value: InventorySlot25
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -9453,7 +9463,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (3)
+      value: InventorySlot14
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -9657,7 +9667,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (17)
+      value: InventorySlot29
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -9782,7 +9792,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (4)
+      value: InventorySlot15
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -10035,7 +10045,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot (9)
+      value: InventorySlot21
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
@@ -10435,7 +10445,7 @@ PrefabInstance:
     - target: {fileID: 6868616610077139079, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}
       propertyPath: m_Name
-      value: InventorySlot
+      value: InventorySlot11
       objectReference: {fileID: 0}
     - target: {fileID: 6868616610077139080, guid: a2b18ba214544a04690f6028c7a28f83,
         type: 3}

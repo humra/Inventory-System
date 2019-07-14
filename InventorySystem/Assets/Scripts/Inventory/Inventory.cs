@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class Inventory : MonoBehaviour
 {
@@ -10,7 +10,7 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance != null)
+        if (Instance != null)
         {
             Debug.LogWarning("More than one instance of inventory found!");
             GameObject.Destroy(this);
@@ -37,6 +37,7 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         _inventorySlots = GameObject.FindObjectsOfType<InventorySlot>();
+        System.Array.Sort(_inventorySlots, (a, b) => a.name.CompareTo(b.name));
         _inventoryCapacity = _inventorySlots.Length;
         _itemHover = GameObject.FindObjectOfType<ItemHover>();
         _itemHover.gameObject.SetActive(false);
@@ -45,7 +46,7 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && _temporaryItem != null)
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && _temporaryItem != null)
         {
             DropItem(_inventorySlots[_originIndex], _temporaryItem);
             _stopFollowingCursor();
