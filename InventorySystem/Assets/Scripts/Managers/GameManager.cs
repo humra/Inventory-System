@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteractionHandler, IItemHoverHandler, IEquipmentHandler
+public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteractionHandler, IItemHoverHandler, IEquipmentHandler, IFocusableObjectHandler
 {
     private PlayerController _playerController;
     private PlayerAnimator _playerAnimator;
@@ -54,6 +54,11 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
             equipmentSlot.EquipmentHandler = this;
         }
 
+        foreach(FocusableObject focusableObject in GameObject.FindObjectsOfType<FocusableObject>())
+        {
+            focusableObject.focusableObjectHandler = this;
+        }
+
         Inventory.Instance.InventoryInteractionHandler = this;
         Inventory.Instance.ItemHoverHandler = this;
     }
@@ -94,7 +99,15 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
     {
         _uiManager.ShowInfoMessage(message);
     }
+
+    public void SetFocus(Transform objectPosition, float focusDuration)
+    {
+        _playerController.DisableInputForDuration(focusDuration);
+        Camera.main.GetComponent<CameraFollow>().FocusOnTarget(objectPosition, focusDuration);
+    }
 }
+
+#region interfaces
 
 public interface IItemPickupHandler
 {
@@ -119,3 +132,10 @@ public interface IEquipmentHandler
 {
     void UpdateAttributesUI();
 }
+
+public interface IFocusableObjectHandler
+{
+    void SetFocus(Transform objectPosition, float focusDuration);
+}
+
+#endregion
