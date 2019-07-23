@@ -94,6 +94,7 @@ public class ItemPickup : MonoBehaviour
     public void SetItem(Item newItem)
     {
         _item = newItem;
+        _image = GetComponent<SpriteRenderer>();
         _setSprite();
     }
 }
