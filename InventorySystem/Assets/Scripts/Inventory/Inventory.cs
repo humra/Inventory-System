@@ -279,6 +279,7 @@ public class Inventory : MonoBehaviour
                 else
                 {
                     Item swapItem = _equipmentSlots[i].GetItem();
+                    _equipmentSlots[i].ClearSlot();
                     _equipmentSlots[i].SetItem(equipmentCast);
                     inventorySlot.SetItem(swapItem);
                     ItemHoverHandler.StopShowingItemInfo();
