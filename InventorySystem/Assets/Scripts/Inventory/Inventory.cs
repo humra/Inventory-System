@@ -183,10 +183,18 @@ public class Inventory : MonoBehaviour
         Item tempItem = inventorySlot.GetItem();
         int tempStackCount = inventorySlot.GetStackCount();
         _destinationIndex = GetIndexOfInventorySlot(inventorySlot);
-        SwapItemToDestination(inventorySlot);
 
-        _inventorySlots[_originIndex].SetItem(tempItem);
-        _inventorySlots[_originIndex].SetStackCount(tempStackCount);
+        if (_originIndex == _destinationIndex)
+        {
+            Debug.Log("Same index");
+        }
+        else
+        {
+            SwapItemToDestination(inventorySlot);
+
+            _inventorySlots[_originIndex].SetItem(tempItem);
+            _inventorySlots[_originIndex].SetStackCount(tempStackCount);
+        }
     }
 
     public void CancelItemSwap()

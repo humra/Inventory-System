@@ -60,7 +60,7 @@ public class EquipmentSlot : EventTrigger
                 break;
 
             case PointerEventData.InputButton.Right:
-                if(_item != null)
+                if((_item != null) && !Inventory.Instance.TemporaryItemExists())
                 {
                     Inventory.Instance.Unequip(this);
                 }
