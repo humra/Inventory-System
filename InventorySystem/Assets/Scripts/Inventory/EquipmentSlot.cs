@@ -20,6 +20,7 @@ public class EquipmentSlot : EventTrigger
     public void SetItem(Equipment item)
     {
         Debug.Log(item.Name + "equipped to " + EquipmentType.ToString());
+        Debug.Log("Durability: " + item.CurrentDurability);
         _item = item;
         _image.sprite = _item.Icon;
 
@@ -73,5 +74,25 @@ public class EquipmentSlot : EventTrigger
     public Equipment GetItem()
     {
         return _item;
+    }
+
+    public void ReduceDurability(int reduction)
+    {
+        _item.CurrentDurability -= reduction;
+
+        if(_item.CurrentDurability <= 0)
+        {
+            ClearSlot();
+        }
+    }
+
+    public int GetDurability()
+    {
+        if(_item == null)
+        {
+            return -1;
+        }
+
+        return _item.CurrentDurability;
     }
 }

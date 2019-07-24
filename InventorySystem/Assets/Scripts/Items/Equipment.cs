@@ -13,6 +13,8 @@ public class Equipment : Item
     public int WisModifier;
     public int ChaModifier;
     public int LucModifier;
+    public int MaxDurability;
+    public int CurrentDurability;
 }
 
 public enum EnumEquipmentSlot
