@@ -16,5 +16,5 @@ public class Equipment : Item
 
 public enum EnumEquipmentSlot
 {
-    EnumHead, EnumChest, EnumLegs, EnumRHand, EnumLHand
+    EnumHead, EnumChest, EnumLegs, EnumRHand, EnumLHand, EnumBoots
 }
