@@ -7,4 +7,5 @@ public static class PlayerAttributes
     public static int Intelligence = 1;
     public static int Wisdom = 1;
     public static int Charisma = 1;
+    public static int Luck = 1;
 }

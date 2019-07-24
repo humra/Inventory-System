@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     private Text _int;
     private Text _wis;
     private Text _cha;
+    private Text _luc;
 
     private Text _hoverText;
     private Text _infoText;
@@ -35,6 +36,7 @@ public class UIManager : MonoBehaviour
         _int = GameObject.Find("IntValueTxt").GetComponent<Text>();
         _wis = GameObject.Find("WisValueTxt").GetComponent<Text>();
         _cha = GameObject.Find("ChaValueTxt").GetComponent<Text>();
+        _luc = GameObject.Find("LucValueTxt").GetComponent<Text>();
 
         _updateAttributeValues();
 
@@ -77,6 +79,7 @@ public class UIManager : MonoBehaviour
         _int.text = PlayerAttributes.Intelligence.ToString();
         _wis.text = PlayerAttributes.Wisdom.ToString();
         _cha.text = PlayerAttributes.Charisma.ToString();
+        _luc.text = PlayerAttributes.Luck.ToString();
     }
 
     public void ToggleInventory()

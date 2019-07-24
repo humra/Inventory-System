@@ -12,6 +12,7 @@ public class Equipment : Item
     public int IntModifier;
     public int WisModifier;
     public int ChaModifier;
+    public int LucModifier;
 }
 
 public enum EnumEquipmentSlot

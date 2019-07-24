@@ -109,6 +109,7 @@ public class ItemPickup : MonoBehaviour
                 PlayerAttributes.Intelligence += consumable.IntModifier;
                 PlayerAttributes.Wisdom += consumable.WisModifier;
                 PlayerAttributes.Charisma += consumable.ChaModifier;
+                PlayerAttributes.Luck += consumable.LucModifier;
                 ItemPickupHandler.UpdateAttributesUI();
 
                 Debug.Log(_item.name + " picked up.");

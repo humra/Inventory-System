@@ -9,19 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1444a6dac59f6fc43b63723231230c61, type: 3}
-  m_Name: Helmet
+  m_Script: {fileID: 11500000, guid: f4e5c1df158ec73469e23c4c9f93ea4b, type: 3}
+  m_Name: ScrollOfLuck
   m_EditorClassIdentifier: 
-  Name: Helmet
-  Icon: {fileID: 21300000, guid: c18a701a6d40fca44bcbe27d4bd60ef8, type: 3}
-  PickupEvent: 1
-  EquipmentSlot: 0
-  Equippable: 0
-  Stackable: 0
-  StrModifier: 1
+  Name: ScrollOfLuck
+  Icon: {fileID: 21300000, guid: aae9092f705da0c47a752308cf349df7, type: 3}
+  PickupEvent: 0
+  StrModifier: 0
   DexModifier: 0
-  ConModifier: 3
+  ConModifier: 0
   IntModifier: 0
   WisModifier: 0
   ChaModifier: 0
-  LucModifier: 1
+  LucModifier: 5
