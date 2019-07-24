@@ -264,6 +264,7 @@ public class Inventory : MonoBehaviour
         }
 
         Equipment equipmentCast = (Equipment)inventorySlot.GetItem();
+        bool firstRingSlotChecked = false;
 
         for(int i = 0; i < _equipmentSlots.Length; i++)
         {
@@ -276,7 +277,12 @@ public class Inventory : MonoBehaviour
                     ItemHoverHandler.StopShowingItemInfo();
                     break;
                 }
-                else
+                else if(equipmentCast.EquipmentSlot == EnumEquipmentSlot.EnumRing && !firstRingSlotChecked)
+                {
+                    firstRingSlotChecked = true;
+                    continue;
+                }
+                else if(firstRingSlotChecked || equipmentCast.EquipmentSlot != EnumEquipmentSlot.EnumRing)
                 {
                     Item swapItem = _equipmentSlots[i].GetItem();
                     _equipmentSlots[i].ClearSlot();
