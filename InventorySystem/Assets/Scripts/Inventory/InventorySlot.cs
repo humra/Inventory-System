@@ -170,7 +170,7 @@ public class InventorySlot : EventTrigger, IPointerEnterHandler, IPointerExitHan
         }
     }
 
-    public void OnPointerEnter(PointerEventData pointerEventData)
+    public override void OnPointerEnter(PointerEventData pointerEventData)
     {
         if(_item == null)
         {
@@ -181,7 +181,7 @@ public class InventorySlot : EventTrigger, IPointerEnterHandler, IPointerExitHan
         ItemHoverHandler.ShowItemInfo(_item);
     }
 
-    public void OnPointerExit(PointerEventData pointerEventData)
+    public override void OnPointerExit(PointerEventData pointerEventData)
     {
         if (_item == null)
         {

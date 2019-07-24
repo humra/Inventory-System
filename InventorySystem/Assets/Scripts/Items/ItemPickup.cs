@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class ItemPickup : MonoBehaviour
 {
     [SerializeField]
     private float _interactibleDistance = 1.5f;
+    [SerializeField]
+    private float _overlapCircleInteractibleDistance = 0.25f;
     [SerializeField]
     private Item _item;
 
@@ -25,13 +26,46 @@ public class ItemPickup : MonoBehaviour
         _originalColor = _image.color;
     }
 
+    #region pickup_options
+
     private void OnMouseDown()
     {
-        if(ItemPickupHandler.IsPlayerWithinInteractibleRange(transform.position, _interactibleDistance))
+        if(ItemPickupHandler.IsPlayerWithinInteractibleRange(transform.position, _interactibleDistance) 
+            && ItemPickupHandler.GetPickupMethod() == EnumPickupMethod.EnumClick)
         {
             _pickUp();
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag.Equals("Player") && ItemPickupHandler.GetPickupMethod() == EnumPickupMethod.EnumTriggerCollision)
+        {
+            _pickUp();
+        }
+    }
+
+    private void Update()
+    {
+        if(ItemPickupHandler.GetPickupMethod() != EnumPickupMethod.EnumPhysicsOverlapCircle)
+        {
+            return;
+        }
+
+        Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, _overlapCircleInteractibleDistance);
+        if(collisions.Length > 0)
+        {
+            foreach(Collider2D collider in collisions)
+            {
+                if (collider.gameObject.tag.Equals("Player"))
+                {
+                    _pickUp();
+                }
+            }
+        }
+    }
+
+    #endregion
 
     private void _setSprite()
     {
