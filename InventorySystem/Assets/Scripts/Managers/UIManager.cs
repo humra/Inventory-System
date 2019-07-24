@@ -112,7 +112,13 @@ public class UIManager : MonoBehaviour
     public void ShowHoverText(string itemName)
     {
         _hoverText.gameObject.SetActive(true);
-        _hoverText.text = itemName;
+        _hoverText.text = itemName + "\n";
+    }
+
+    public void ShowHoverText(string itemName, int maxDurability, int currentDurability)
+    {
+        _hoverText.gameObject.SetActive(true);
+        _hoverText.text = itemName + "\n" + currentDurability + "/" + maxDurability + "\n";
     }
 
     public void HideHoverText()

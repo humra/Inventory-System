@@ -24,3 +24,6 @@ MonoBehaviour:
   IntModifier: -2
   WisModifier: -2
   ChaModifier: 0
+  LucModifier: 0
+  MaxDurability: 100
+  CurrentDurability: 0

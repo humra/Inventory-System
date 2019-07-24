@@ -25,3 +25,5 @@ MonoBehaviour:
   WisModifier: 0
   ChaModifier: 1
   LucModifier: 3
+  MaxDurability: 100
+  CurrentDurability: 0

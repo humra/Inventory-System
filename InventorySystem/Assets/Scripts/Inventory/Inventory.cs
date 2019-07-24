@@ -106,6 +106,7 @@ public class Inventory : MonoBehaviour
         if(newItem.GetType() == typeof(Equipment))
         {
             Equipment itemCast = (Equipment)newItem;
+            itemCast.CurrentDurability = itemCast.MaxDurability;
 
             for (int i = 0; i < _equipmentSlots.Length; i++)
             {
