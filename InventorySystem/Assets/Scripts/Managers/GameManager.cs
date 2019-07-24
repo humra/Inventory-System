@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
     private PlayerAnimator _playerAnimator;
     private UIManager _uiManager;
     private Inventory _inventory;
+    private EnumPickupMethod _pickupMethod;
 
     public GameObject PickupPrefab;
     public Item[] ExistingItems;
@@ -27,6 +28,22 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
         if(Input.GetKeyDown(KeyCode.Space))
         {
             _instantiateRandomItem();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Debug.Log("Pickup method: " + EnumPickupMethod.EnumClick);
+            _pickupMethod = EnumPickupMethod.EnumClick;
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Debug.Log("Pickup method: " + EnumPickupMethod.EnumTriggerCollision);
+            _pickupMethod = EnumPickupMethod.EnumTriggerCollision;
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Debug.Log("Pickup method: " + EnumPickupMethod.EnumPhysicsOverlapCircle);
+            _pickupMethod = EnumPickupMethod.EnumPhysicsOverlapCircle;
         }
     }
 
@@ -73,6 +90,11 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
         return Vector3.Distance(itemPosition, _playerController.transform.position) <= interactibleDistance;
     }
 
+    public EnumPickupMethod GetPickupMethod()
+    {
+        return _pickupMethod;
+    }
+
     public void UpdateAttributesUI()
     {
         _uiManager.UpdateAttributes();
@@ -114,6 +136,7 @@ public interface IItemPickupHandler
     bool IsPlayerWithinInteractibleRange(Vector3 itemPosition, float interactibleDistance);
     void UpdateAttributesUI();
     void ShowInfoMessage(string message);
+    EnumPickupMethod GetPickupMethod();
 }
 
 public interface IInventoryInteractionHandler
@@ -139,3 +162,8 @@ public interface IFocusableObjectHandler
 }
 
 #endregion
+
+public enum EnumPickupMethod
+{
+    EnumClick, EnumTriggerCollision, EnumPhysicsOverlapCircle
+}
