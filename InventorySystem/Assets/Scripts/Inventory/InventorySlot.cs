@@ -178,7 +178,15 @@ public class InventorySlot : EventTrigger, IPointerEnterHandler, IPointerExitHan
         }
 
         Highlight();
-        ItemHoverHandler.ShowItemInfo(_item);
+
+        if(_item.GetType() == typeof(Equipment))
+        {
+            ItemHoverHandler.ShowEquipmentInfo((Equipment)_item);
+        }
+        else
+        {
+            ItemHoverHandler.ShowItemInfo(_item);
+        }
     }
 
     public override void OnPointerExit(PointerEventData pointerEventData)

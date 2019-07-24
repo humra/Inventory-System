@@ -29,7 +29,6 @@ public class DurabilityManager : MonoBehaviour
         {
             if(_equipmentSlots[i].GetItem() != null)
             {
-                Debug.Log(_equipmentSlots[i].GetItem().Name + " durability at: " + _equipmentSlots[i].GetDurability());
                 _equipmentSlots[i].ReduceDurability(_durabilityReductionFactor);
             }
         }

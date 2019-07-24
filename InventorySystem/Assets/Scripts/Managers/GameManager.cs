@@ -112,6 +112,11 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
         _uiManager.ShowHoverText(item.Name);
     }
 
+    public void ShowEquipmentInfo(Equipment equipment)
+    {
+        _uiManager.ShowHoverText(equipment.Name, equipment.MaxDurability, equipment.CurrentDurability);
+    }
+
     public void StopShowingItemInfo()
     {
         _uiManager.HideHoverText();
@@ -149,6 +154,7 @@ public interface IItemHoverHandler
 {
     void ShowItemInfo(Item item);
     void StopShowingItemInfo();
+    void ShowEquipmentInfo(Equipment equipment);
 }
 
 public interface IEquipmentHandler
