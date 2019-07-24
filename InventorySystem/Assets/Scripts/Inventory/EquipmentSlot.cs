@@ -29,6 +29,7 @@ public class EquipmentSlot : EventTrigger
         PlayerAttributes.Intelligence += _item.IntModifier;
         PlayerAttributes.Wisdom += _item.WisModifier;
         PlayerAttributes.Charisma += _item.ChaModifier;
+        PlayerAttributes.Luck += _item.LucModifier;
 
         EquipmentHandler.UpdateAttributesUI();
     }
@@ -41,6 +42,7 @@ public class EquipmentSlot : EventTrigger
         PlayerAttributes.Intelligence -= _item.IntModifier;
         PlayerAttributes.Wisdom -= _item.WisModifier;
         PlayerAttributes.Charisma -= _item.ChaModifier;
+        PlayerAttributes.Luck -= _item.LucModifier;
 
         _item = null;
         _image.sprite = _defaultSprite;
