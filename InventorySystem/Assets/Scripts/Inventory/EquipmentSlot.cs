@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.Analytics;
 
-public class EquipmentSlot : EventTrigger
+public class EquipmentSlot : UnityEngine.EventSystems.EventTrigger
 {
     private Equipment _item;
     private Image _image;
@@ -19,8 +21,8 @@ public class EquipmentSlot : EventTrigger
 
     public void SetItem(Equipment item)
     {
-        Debug.Log(item.Name + "equipped to " + EquipmentType.ToString());
-        Debug.Log("Durability: " + item.CurrentDurability);
+        Debug.Log(item.Name + " equipped to " + EquipmentType.ToString());
+
         _item = item;
         _image.sprite = _item.Icon;
 
@@ -31,6 +33,11 @@ public class EquipmentSlot : EventTrigger
         PlayerAttributes.Wisdom += _item.WisModifier;
         PlayerAttributes.Charisma += _item.ChaModifier;
         PlayerAttributes.Luck += _item.LucModifier;
+
+        Analytics.CustomEvent("Item equipped", new Dictionary<string, object>
+        {
+            { _item.Name, _item.EquipmentSlot }
+        });
 
         EquipmentHandler.UpdateAttributesUI();
     }

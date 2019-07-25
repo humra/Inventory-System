@@ -587,10 +587,10 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: 063f1444-a959-476b-97c1-4be0ebca174e
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: InventorySystem
+  organizationId: humra
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
