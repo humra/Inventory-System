@@ -18,29 +18,40 @@ public class SpendableAttributes : MonoBehaviour
         _currentHP = _maxHP;
         _maxMP = _originalMP;
         _currentMP = _maxMP;
+
+        UpdateMaxStats();
+    }
+
+    public void UpdateMaxStats()
+    {
+        _maxHP = _originalHP + (PlayerAttributes.Constitution * 10);
+        _maxMP = _originalMP + (PlayerAttributes.Intelligence * 10);
+
+        _currentHP = Mathf.Clamp(_currentHP, 0, _maxHP);
+        _currentMP = Mathf.Clamp(_currentMP, 0, _maxMP);
     }
 
     public void LoseHP(int amount)
     {
         _currentHP -= amount;
-        Mathf.Clamp(_currentHP, 0, _maxHP);
+        _currentHP = Mathf.Clamp(_currentHP, 0, _maxHP);
     }
 
     public void GainHP(int amount)
     {
         _currentHP += amount;
-        Mathf.Clamp(_currentHP, 0, _maxHP);
+        _currentHP = Mathf.Clamp(_currentHP, 0, _maxHP);
     }
 
     public void LoseMP(int amount)
     {
         _currentMP -= amount;
-        Mathf.Clamp(_currentMP, 0, _maxMP);
+        _currentMP = Mathf.Clamp(_currentMP, 0, _maxMP);
     }
 
     public void GainMP(int amount)
     {
         _currentMP += amount;
-        Mathf.Clamp(_currentMP, 0, _maxMP);
+        _currentMP = Mathf.Clamp(_currentMP, 0, _maxMP);
     }
 }

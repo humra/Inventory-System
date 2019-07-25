@@ -134,6 +134,11 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
         _uiManager.UpdateAttributes();
     }
 
+    public void UpdateSpendableAttributes()
+    {
+        _spendableAttributes.UpdateMaxStats();
+    }
+
     public void DropItem(Item item)
     {
         GameObject newPickup = Instantiate(PickupPrefab, _playerController.transform.position, Quaternion.identity);
@@ -194,6 +199,7 @@ public interface IItemHoverHandler
 public interface IEquipmentHandler
 {
     void UpdateAttributesUI();
+    void UpdateSpendableAttributes();
 }
 
 public interface IFocusableObjectHandler
