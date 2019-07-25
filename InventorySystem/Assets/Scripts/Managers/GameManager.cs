@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
     private float _currentDistanceTravelled = 0;
     private int _timesDistanceTracked = 0;
     private Vector3 _lastPlayerPosition;
+    private SpendableAttributes _spendableAttributes;
 
     [SerializeField]
     private float _distanceTrackingIncrement = 10;
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
         _uiManager = FindObjectOfType<UIManager>();
         _inventory = FindObjectOfType<Inventory>();
         _lastPlayerPosition = _playerController.transform.position;
+        _spendableAttributes = FindObjectOfType<SpendableAttributes>();
 
         _injectInterfaceDependencies();
     }
