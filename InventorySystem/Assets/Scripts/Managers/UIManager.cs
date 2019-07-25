@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -87,7 +89,14 @@ public class UIManager : MonoBehaviour
         _inventoryPanel.SetActive(!_inventoryPanel.activeSelf);
         _inventoryButton.SetActive(!_inventoryButton.activeSelf);
 
-        if(!_inventoryPanel.activeSelf && Inventory.Instance.TemporaryItemExists()) {
+        bool opened = _inventoryPanel.activeSelf;
+
+        Analytics.CustomEvent("UI window interaction", new Dictionary<string, object>
+        {
+            { "Inventory",  opened.ToString()}
+        });
+
+        if (!_inventoryPanel.activeSelf && Inventory.Instance.TemporaryItemExists()) {
             Inventory.Instance.CancelItemSwap();
         }
     }
@@ -96,12 +105,26 @@ public class UIManager : MonoBehaviour
     {
         _equipmentPanel.SetActive(!_equipmentPanel.activeSelf);
         _equipmentButton.SetActive(!_equipmentButton.activeSelf);
+
+        bool opened = _equipmentPanel.activeSelf;
+
+        Analytics.CustomEvent("UI window interaction", new Dictionary<string, object>
+        {
+            { "Equipment",  opened.ToString()}
+        });
     }
 
     public void ToggleAttributes()
     {
         _attributesPanel.SetActive(!_attributesPanel.activeSelf);
         _attributesButton.SetActive(!_attributesButton.activeSelf);
+
+        bool opened = _attributesPanel.activeSelf;
+
+        Analytics.CustomEvent("UI window interaction", new Dictionary<string, object>
+        {
+            { "Attributes",  opened.ToString()}
+        });
     }
 
     public void UpdateAttributes()

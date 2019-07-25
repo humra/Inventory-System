@@ -1,4 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.Analytics;
+using System.Collections.Generic;
+using System;
 
 public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteractionHandler, IItemHoverHandler, IEquipmentHandler, IFocusableObjectHandler
 {
@@ -13,6 +16,11 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
 
     private void Start()
     {
+        Analytics.CustomEvent("Game Started", new Dictionary<string, object>
+        {
+            { Application.platform.ToString(), DateTime.Now }
+        });
+
         _playerController = FindObjectOfType<PlayerController>();
         _playerAnimator = FindObjectOfType<PlayerAnimator>();
         _uiManager = FindObjectOfType<UIManager>();
@@ -50,7 +58,7 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
     private void _instantiateRandomItem()
     {
         GameObject newPickup = Instantiate(PickupPrefab, _playerController.transform.position, Quaternion.identity);
-        newPickup.GetComponent<ItemPickup>().SetItem(ExistingItems[Random.Range(0, ExistingItems.Length)]);
+        newPickup.GetComponent<ItemPickup>().SetItem(ExistingItems[UnityEngine.Random.Range(0, ExistingItems.Length)]);
         newPickup.GetComponent<ItemPickup>().ItemPickupHandler = this;
     }
 

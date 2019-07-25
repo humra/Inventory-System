@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Analytics;
 
 public class ItemPickup : MonoBehaviour
 {
@@ -99,7 +101,12 @@ public class ItemPickup : MonoBehaviour
 
     private void _pickUp()
     {
-        switch(_item.PickupEvent)
+        Analytics.CustomEvent("Item picked up", new Dictionary<string, object>
+        {
+            { _item.Name, _item.GetType().ToString() }
+        });
+
+        switch (_item.PickupEvent)
         {
             case EnumPickupEvent.EnumPermanentUsage:
                 ConsumablePickup consumable = (ConsumablePickup)_item;
@@ -114,12 +121,19 @@ public class ItemPickup : MonoBehaviour
 
                 Debug.Log(_item.name + " picked up.");
                 ItemPickupHandler.ShowInfoMessage(_item.name + " picked up.");
+
+                Analytics.CustomEvent("Item used ", new Dictionary<string, object>
+                {
+                    { _item.Name, _item.GetType().ToString() }
+                });
+
                 Destroy(gameObject);
                 break;
 
             case EnumPickupEvent.EnumPickupToInventory:
                 if (Inventory.Instance.AddItem(_item))
                 {
+
                     Destroy(gameObject);
                 }
                 break;
