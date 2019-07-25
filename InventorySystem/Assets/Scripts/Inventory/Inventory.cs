@@ -352,7 +352,7 @@ public class Inventory : MonoBehaviour
                 InventoryInteractionHandler.RampUpValue(consumable);
                 break;
             case EnumConsumableType.EnumTick:
-                //TO-DO
+                InventoryInteractionHandler.TickUpValue(consumable);
                 break;
         }
 

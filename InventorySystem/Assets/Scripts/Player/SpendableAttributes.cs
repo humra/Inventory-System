@@ -31,22 +31,10 @@ public class SpendableAttributes : MonoBehaviour
         _currentMP = Mathf.Clamp(_currentMP, 0, _maxMP);
     }
 
-    public void LoseHP(int amount)
-    {
-        _currentHP -= amount;
-        _currentHP = Mathf.Clamp(_currentHP, 0, _maxHP);
-    }
-
     public void GainHP(int amount)
-    {
+    { 
         _currentHP += amount;
         _currentHP = Mathf.Clamp(_currentHP, 0, _maxHP);
-    }
-
-    public void LoseMP(int amount)
-    {
-        _currentMP -= amount;
-        _currentMP = Mathf.Clamp(_currentMP, 0, _maxMP);
     }
 
     public void GainMP(int amount)

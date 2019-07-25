@@ -9,7 +9,7 @@ public class Consumable : Item
     public float Duration;
     public float RampTime;
     public float TickTime;
-    public float NumberOfTicks;
+    public int NumberOfTicks;
 }
 
 public enum EnumConsumableType

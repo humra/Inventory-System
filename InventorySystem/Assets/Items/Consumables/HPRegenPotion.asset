@@ -17,7 +17,7 @@ MonoBehaviour:
   PickupEvent: 1
   ModifiedAttribute: 7
   ConsumableType: 1
-  Factor: 5
+  Factor: 2
   Duration: 0
   RampTime: 0
   TickTime: 1

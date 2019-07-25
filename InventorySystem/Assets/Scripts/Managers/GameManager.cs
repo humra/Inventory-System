@@ -249,6 +249,24 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
         _uiManager.UpdateAttributes();
     }
 
+    private IEnumerator _tickUpValue(EnumAttributes attribute, int factor, int numberOfTicks, float tickTime)
+    {
+        for(int i = 1; i <= numberOfTicks; i++)
+        {
+            switch(attribute)
+            {
+                case EnumAttributes.EnumHP:
+                    _spendableAttributes.GainHP(factor);
+                    break;
+                case EnumAttributes.EnumMP:
+                    _spendableAttributes.GainMP(factor);
+                    break;
+            }
+
+            yield return new WaitForSeconds(tickTime);
+        }
+    }
+
     #endregion
 
     public bool IsPlayerWithinInteractibleRange(Vector3 itemPosition, float interactibleDistance)
@@ -308,6 +326,11 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
         StartCoroutine(_rampUpValueThenHold(consumable.ModifiedAttribute, consumable.Factor, consumable.Duration, consumable.RampTime));
     }
 
+    public void TickUpValue(Consumable consumable)
+    {
+        StartCoroutine(_tickUpValue(consumable.ModifiedAttribute, consumable.Factor, consumable.NumberOfTicks, consumable.TickTime));
+    }
+
     public void SetFocus(Transform objectPosition, float focusDuration)
     {
         _playerController.DisableInputForDuration(focusDuration);
@@ -331,6 +354,7 @@ public interface IInventoryInteractionHandler
     void ShowInfoMessage(string message);
     void HoldValue(Consumable consumable);
     void RampUpValue(Consumable consumable);
+    void TickUpValue(Consumable consumable);
 }
 
 public interface IItemHoverHandler
