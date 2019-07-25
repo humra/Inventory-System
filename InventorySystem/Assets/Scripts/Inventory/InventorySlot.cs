@@ -150,6 +150,11 @@ public class InventorySlot : EventTrigger, IPointerEnterHandler, IPointerExitHan
                     break;
 
                 case PointerEventData.InputButton.Right:
+                    if(_item.GetType() == typeof(Consumable))
+                    {
+                        Inventory.Instance.UseConsumableItem(this);
+                        break;
+                    }
                     Inventory.Instance.EquipItem(this);
                     break;
             }
@@ -170,7 +175,7 @@ public class InventorySlot : EventTrigger, IPointerEnterHandler, IPointerExitHan
         }
     }
 
-    public void OnPointerEnter(PointerEventData pointerEventData)
+    public override void OnPointerEnter(PointerEventData pointerEventData)
     {
         if(_item == null)
         {
@@ -178,10 +183,18 @@ public class InventorySlot : EventTrigger, IPointerEnterHandler, IPointerExitHan
         }
 
         Highlight();
-        ItemHoverHandler.ShowItemInfo(_item);
+
+        if(_item.GetType() == typeof(Equipment))
+        {
+            ItemHoverHandler.ShowEquipmentInfo((Equipment)_item);
+        }
+        else
+        {
+            ItemHoverHandler.ShowItemInfo(_item);
+        }
     }
 
-    public void OnPointerExit(PointerEventData pointerEventData)
+    public override void OnPointerExit(PointerEventData pointerEventData)
     {
         if (_item == null)
         {

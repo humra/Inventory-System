@@ -106,6 +106,7 @@ public class Inventory : MonoBehaviour
         if(newItem.GetType() == typeof(Equipment))
         {
             Equipment itemCast = (Equipment)newItem;
+            itemCast.CurrentDurability = itemCast.MaxDurability;
 
             for (int i = 0; i < _equipmentSlots.Length; i++)
             {
@@ -183,10 +184,18 @@ public class Inventory : MonoBehaviour
         Item tempItem = inventorySlot.GetItem();
         int tempStackCount = inventorySlot.GetStackCount();
         _destinationIndex = GetIndexOfInventorySlot(inventorySlot);
-        SwapItemToDestination(inventorySlot);
 
-        _inventorySlots[_originIndex].SetItem(tempItem);
-        _inventorySlots[_originIndex].SetStackCount(tempStackCount);
+        if (_originIndex == _destinationIndex)
+        {
+            Debug.Log("Same index");
+        }
+        else
+        {
+            SwapItemToDestination(inventorySlot);
+
+            _inventorySlots[_originIndex].SetItem(tempItem);
+            _inventorySlots[_originIndex].SetStackCount(tempStackCount);
+        }
     }
 
     public void CancelItemSwap()
@@ -256,6 +265,7 @@ public class Inventory : MonoBehaviour
         }
 
         Equipment equipmentCast = (Equipment)inventorySlot.GetItem();
+        bool firstRingSlotChecked = false;
 
         for(int i = 0; i < _equipmentSlots.Length; i++)
         {
@@ -268,9 +278,15 @@ public class Inventory : MonoBehaviour
                     ItemHoverHandler.StopShowingItemInfo();
                     break;
                 }
-                else
+                else if(equipmentCast.EquipmentSlot == EnumEquipmentSlot.EnumRing && !firstRingSlotChecked)
+                {
+                    firstRingSlotChecked = true;
+                    continue;
+                }
+                else if(firstRingSlotChecked || equipmentCast.EquipmentSlot != EnumEquipmentSlot.EnumRing)
                 {
                     Item swapItem = _equipmentSlots[i].GetItem();
+                    _equipmentSlots[i].ClearSlot();
                     _equipmentSlots[i].SetItem(equipmentCast);
                     inventorySlot.SetItem(swapItem);
                     ItemHoverHandler.StopShowingItemInfo();
@@ -322,4 +338,25 @@ public class Inventory : MonoBehaviour
     }
 
     #endregion
+
+    public void UseConsumableItem(InventorySlot slot)
+    {
+        Consumable consumable = (Consumable)slot.GetItem();
+
+        switch(consumable.ConsumableType)
+        {
+            case EnumConsumableType.EnumHold:
+                InventoryInteractionHandler.HoldValue(consumable);
+                break;
+            case EnumConsumableType.EnumRamp:
+                InventoryInteractionHandler.RampUpValue(consumable);
+                break;
+            case EnumConsumableType.EnumTick:
+                InventoryInteractionHandler.TickUpValue(consumable);
+                break;
+        }
+
+        slot.ClearSlot();
+        ItemHoverHandler.StopShowingItemInfo();
+    }
 }

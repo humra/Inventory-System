@@ -10,17 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1444a6dac59f6fc43b63723231230c61, type: 3}
-  m_Name: Helmet
+  m_Name: Shield
   m_EditorClassIdentifier: 
-  Name: Helmet
-  Icon: {fileID: 21300000, guid: c18a701a6d40fca44bcbe27d4bd60ef8, type: 3}
+  Name: Shield
+  Icon: {fileID: 21300000, guid: 89d28f9ca09f54d45b3511eec5b62f67, type: 3}
   PickupEvent: 1
-  EquipmentSlot: 0
+  EquipmentSlot: 4
   Equippable: 0
   Stackable: 0
-  StrModifier: 1
-  DexModifier: 0
-  ConModifier: 3
-  IntModifier: 0
-  WisModifier: 0
+  StrModifier: 2
+  DexModifier: 1
+  ConModifier: 2
+  IntModifier: -2
+  WisModifier: -2
   ChaModifier: 0
+  LucModifier: 0
+  MaxDurability: 100
+  CurrentDurability: 0

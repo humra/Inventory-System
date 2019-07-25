@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -16,6 +18,7 @@ public class UIManager : MonoBehaviour
     private Text _int;
     private Text _wis;
     private Text _cha;
+    private Text _luc;
 
     private Text _hoverText;
     private Text _infoText;
@@ -35,6 +38,7 @@ public class UIManager : MonoBehaviour
         _int = GameObject.Find("IntValueTxt").GetComponent<Text>();
         _wis = GameObject.Find("WisValueTxt").GetComponent<Text>();
         _cha = GameObject.Find("ChaValueTxt").GetComponent<Text>();
+        _luc = GameObject.Find("LucValueTxt").GetComponent<Text>();
 
         _updateAttributeValues();
 
@@ -77,6 +81,7 @@ public class UIManager : MonoBehaviour
         _int.text = PlayerAttributes.Intelligence.ToString();
         _wis.text = PlayerAttributes.Wisdom.ToString();
         _cha.text = PlayerAttributes.Charisma.ToString();
+        _luc.text = PlayerAttributes.Luck.ToString();
     }
 
     public void ToggleInventory()
@@ -84,7 +89,14 @@ public class UIManager : MonoBehaviour
         _inventoryPanel.SetActive(!_inventoryPanel.activeSelf);
         _inventoryButton.SetActive(!_inventoryButton.activeSelf);
 
-        if(!_inventoryPanel.activeSelf && Inventory.Instance.TemporaryItemExists()) {
+        bool opened = _inventoryPanel.activeSelf;
+
+        Analytics.CustomEvent("UI window interaction", new Dictionary<string, object>
+        {
+            { "Inventory",  opened.ToString()}
+        });
+
+        if (!_inventoryPanel.activeSelf && Inventory.Instance.TemporaryItemExists()) {
             Inventory.Instance.CancelItemSwap();
         }
     }
@@ -93,12 +105,26 @@ public class UIManager : MonoBehaviour
     {
         _equipmentPanel.SetActive(!_equipmentPanel.activeSelf);
         _equipmentButton.SetActive(!_equipmentButton.activeSelf);
+
+        bool opened = _equipmentPanel.activeSelf;
+
+        Analytics.CustomEvent("UI window interaction", new Dictionary<string, object>
+        {
+            { "Equipment",  opened.ToString()}
+        });
     }
 
     public void ToggleAttributes()
     {
         _attributesPanel.SetActive(!_attributesPanel.activeSelf);
         _attributesButton.SetActive(!_attributesButton.activeSelf);
+
+        bool opened = _attributesPanel.activeSelf;
+
+        Analytics.CustomEvent("UI window interaction", new Dictionary<string, object>
+        {
+            { "Attributes",  opened.ToString()}
+        });
     }
 
     public void UpdateAttributes()
@@ -109,7 +135,13 @@ public class UIManager : MonoBehaviour
     public void ShowHoverText(string itemName)
     {
         _hoverText.gameObject.SetActive(true);
-        _hoverText.text = itemName;
+        _hoverText.text = itemName + "\n";
+    }
+
+    public void ShowHoverText(string itemName, int maxDurability, int currentDurability)
+    {
+        _hoverText.gameObject.SetActive(true);
+        _hoverText.text = itemName + "\n" + currentDurability + "/" + maxDurability + "\n";
     }
 
     public void HideHoverText()
