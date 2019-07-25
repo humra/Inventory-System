@@ -2,6 +2,7 @@
 using UnityEngine.Analytics;
 using System.Collections.Generic;
 using System;
+using System.Collections;
 
 public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteractionHandler, IItemHoverHandler, IEquipmentHandler, IFocusableObjectHandler
 {
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
     private float _currentDistanceTravelled = 0;
     private int _timesDistanceTracked = 0;
     private Vector3 _lastPlayerPosition;
+    private SpendableAttributes _spendableAttributes;
 
     [SerializeField]
     private float _distanceTrackingIncrement = 10;
@@ -34,6 +36,7 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
         _uiManager = FindObjectOfType<UIManager>();
         _inventory = FindObjectOfType<Inventory>();
         _lastPlayerPosition = _playerController.transform.position;
+        _spendableAttributes = FindObjectOfType<SpendableAttributes>();
 
         _injectInterfaceDependencies();
     }
@@ -117,6 +120,155 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
         _playerAnimator.SetAnimatorParameters(_playerController.GetPlayerVelocity());
     }
 
+    #region coroutines
+
+    private IEnumerator _modifyAttributeForSetTime(EnumAttributes attribute, int factor, float duration)
+    {
+        switch(attribute)
+        {
+            case EnumAttributes.EnumStr:
+                PlayerAttributes.Strength += factor;
+                break;
+            case EnumAttributes.EnumDex:
+                PlayerAttributes.Dexterity += factor;
+                break;
+            case EnumAttributes.EnumCon:
+                PlayerAttributes.Constitution += factor;
+                break;
+            case EnumAttributes.EnumInt:
+                PlayerAttributes.Intelligence += factor;
+                break;
+            case EnumAttributes.EnumWis:
+                PlayerAttributes.Wisdom += factor;
+                break;
+            case EnumAttributes.EnumCha:
+                PlayerAttributes.Charisma += factor;
+                break;
+            case EnumAttributes.EnumLuc:
+                PlayerAttributes.Luck += factor;
+                break;
+        }
+
+        _uiManager.UpdateAttributes();
+
+        yield return new WaitForSeconds(duration);
+
+        switch (attribute)
+        {
+            case EnumAttributes.EnumStr:
+                PlayerAttributes.Strength -= factor;
+                break;
+            case EnumAttributes.EnumDex:
+                PlayerAttributes.Dexterity -= factor;
+                break;
+            case EnumAttributes.EnumCon:
+                PlayerAttributes.Constitution -= factor;
+                break;
+            case EnumAttributes.EnumInt:
+                PlayerAttributes.Intelligence -= factor;
+                break;
+            case EnumAttributes.EnumWis:
+                PlayerAttributes.Wisdom -= factor;
+                break;
+            case EnumAttributes.EnumCha:
+                PlayerAttributes.Charisma -= factor;
+                break;
+            case EnumAttributes.EnumLuc:
+                PlayerAttributes.Luck -= factor;
+                break;
+        }
+
+        _uiManager.UpdateAttributes();
+    }
+
+    private IEnumerator _rampUpValueThenHold(EnumAttributes attribute, int factor, float duration, float rampTime)
+    {
+        float rampTick = rampTime / factor;
+        int factorCounter = 0;
+
+        while(factorCounter < factor)
+        {
+            yield return new WaitForSeconds(rampTick);
+
+            switch (attribute)
+            {
+                case EnumAttributes.EnumStr:
+                    PlayerAttributes.Strength++;
+                    break;
+                case EnumAttributes.EnumDex:
+                    PlayerAttributes.Dexterity++;
+                    break;
+                case EnumAttributes.EnumCon:
+                    PlayerAttributes.Constitution++;
+                    break;
+                case EnumAttributes.EnumInt:
+                    PlayerAttributes.Intelligence++;
+                    break;
+                case EnumAttributes.EnumWis:
+                    PlayerAttributes.Wisdom++;
+                    break;
+                case EnumAttributes.EnumCha:
+                    PlayerAttributes.Charisma++;
+                    break;
+                case EnumAttributes.EnumLuc:
+                    PlayerAttributes.Luck++;
+                    break;
+            }
+
+            _uiManager.UpdateAttributes();
+            factorCounter++;
+        }
+
+        yield return new WaitForSeconds(duration);
+
+        switch (attribute)
+        {
+            case EnumAttributes.EnumStr:
+                PlayerAttributes.Strength -= factor;
+                break;
+            case EnumAttributes.EnumDex:
+                PlayerAttributes.Dexterity -= factor;
+                break;
+            case EnumAttributes.EnumCon:
+                PlayerAttributes.Constitution -= factor;
+                break;
+            case EnumAttributes.EnumInt:
+                PlayerAttributes.Intelligence -= factor;
+                break;
+            case EnumAttributes.EnumWis:
+                PlayerAttributes.Wisdom -= factor;
+                break;
+            case EnumAttributes.EnumCha:
+                PlayerAttributes.Charisma -= factor;
+                break;
+            case EnumAttributes.EnumLuc:
+                PlayerAttributes.Luck -= factor;
+                break;
+        }
+
+        _uiManager.UpdateAttributes();
+    }
+
+    private IEnumerator _tickUpValue(EnumAttributes attribute, int factor, int numberOfTicks, float tickTime)
+    {
+        for(int i = 1; i <= numberOfTicks; i++)
+        {
+            switch(attribute)
+            {
+                case EnumAttributes.EnumHP:
+                    _spendableAttributes.GainHP(factor);
+                    break;
+                case EnumAttributes.EnumMP:
+                    _spendableAttributes.GainMP(factor);
+                    break;
+            }
+
+            yield return new WaitForSeconds(tickTime);
+        }
+    }
+
+    #endregion
+
     public bool IsPlayerWithinInteractibleRange(Vector3 itemPosition, float interactibleDistance)
     {
         return Vector3.Distance(itemPosition, _playerController.transform.position) <= interactibleDistance;
@@ -130,6 +282,11 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
     public void UpdateAttributesUI()
     {
         _uiManager.UpdateAttributes();
+    }
+
+    public void UpdateSpendableAttributes()
+    {
+        _spendableAttributes.UpdateMaxStats();
     }
 
     public void DropItem(Item item)
@@ -159,6 +316,21 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
         _uiManager.ShowInfoMessage(message);
     }
 
+    public void HoldValue(Consumable consumable)
+    {
+        StartCoroutine(_modifyAttributeForSetTime(consumable.ModifiedAttribute, consumable.Factor, consumable.Duration));
+    }
+
+    public void RampUpValue(Consumable consumable)
+    {
+        StartCoroutine(_rampUpValueThenHold(consumable.ModifiedAttribute, consumable.Factor, consumable.Duration, consumable.RampTime));
+    }
+
+    public void TickUpValue(Consumable consumable)
+    {
+        StartCoroutine(_tickUpValue(consumable.ModifiedAttribute, consumable.Factor, consumable.NumberOfTicks, consumable.TickTime));
+    }
+
     public void SetFocus(Transform objectPosition, float focusDuration)
     {
         _playerController.DisableInputForDuration(focusDuration);
@@ -180,6 +352,9 @@ public interface IInventoryInteractionHandler
 {
     void DropItem(Item item);
     void ShowInfoMessage(string message);
+    void HoldValue(Consumable consumable);
+    void RampUpValue(Consumable consumable);
+    void TickUpValue(Consumable consumable);
 }
 
 public interface IItemHoverHandler
@@ -192,6 +367,7 @@ public interface IItemHoverHandler
 public interface IEquipmentHandler
 {
     void UpdateAttributesUI();
+    void UpdateSpendableAttributes();
 }
 
 public interface IFocusableObjectHandler

@@ -40,6 +40,7 @@ public class EquipmentSlot : UnityEngine.EventSystems.EventTrigger
         });
 
         EquipmentHandler.UpdateAttributesUI();
+        EquipmentHandler.UpdateSpendableAttributes();
     }
 
     public void ClearSlot()
@@ -56,6 +57,7 @@ public class EquipmentSlot : UnityEngine.EventSystems.EventTrigger
         _image.sprite = _defaultSprite;
 
         EquipmentHandler.UpdateAttributesUI();
+        EquipmentHandler.UpdateSpendableAttributes();
     }
 
     public override void OnPointerDown(PointerEventData eventData)
