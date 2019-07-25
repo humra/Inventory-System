@@ -338,4 +338,25 @@ public class Inventory : MonoBehaviour
     }
 
     #endregion
+
+    public void UseConsumableItem(InventorySlot slot)
+    {
+        Consumable consumable = (Consumable)slot.GetItem();
+
+        switch(consumable.ConsumableType)
+        {
+            case EnumConsumableType.EnumHold:
+                InventoryInteractionHandler.HoldValue(consumable);
+                break;
+            case EnumConsumableType.EnumRamp:
+                InventoryInteractionHandler.RampUpValue(consumable);
+                break;
+            case EnumConsumableType.EnumTick:
+                //TO-DO
+                break;
+        }
+
+        slot.ClearSlot();
+        ItemHoverHandler.StopShowingItemInfo();
+    }
 }
