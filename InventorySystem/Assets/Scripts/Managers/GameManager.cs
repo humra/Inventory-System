@@ -10,6 +10,14 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
     private UIManager _uiManager;
     private Inventory _inventory;
     private EnumPickupMethod _pickupMethod;
+    private float _currentDistanceTravelled = 0;
+    private int _timesDistanceTracked = 0;
+    private Vector3 _lastPlayerPosition;
+
+    [SerializeField]
+    private float _distanceTrackingIncrement = 10;
+    [SerializeField]
+    private int _maxDistanceTrackedNumber = 5;
 
     public GameObject PickupPrefab;
     public Item[] ExistingItems;
@@ -25,6 +33,7 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
         _playerAnimator = FindObjectOfType<PlayerAnimator>();
         _uiManager = FindObjectOfType<UIManager>();
         _inventory = FindObjectOfType<Inventory>();
+        _lastPlayerPosition = _playerController.transform.position;
 
         _injectInterfaceDependencies();
     }
@@ -52,6 +61,21 @@ public class GameManager : MonoBehaviour, IItemPickupHandler, IInventoryInteract
         {
             Debug.Log("Pickup method: " + EnumPickupMethod.EnumPhysicsOverlapCircle);
             _pickupMethod = EnumPickupMethod.EnumPhysicsOverlapCircle;
+        }
+
+
+        if(_timesDistanceTracked < _maxDistanceTrackedNumber)
+        {
+            _currentDistanceTravelled += Mathf.Abs(Vector3.Distance(_lastPlayerPosition, _playerController.transform.position));
+            _lastPlayerPosition = _playerController.transform.position;
+
+            if(_currentDistanceTravelled >= _distanceTrackingIncrement)
+            {
+                _timesDistanceTracked++;
+                _currentDistanceTravelled = 0;
+
+                Analytics.CustomEvent("Player travelled 10 units");
+            }
         }
     }
 
